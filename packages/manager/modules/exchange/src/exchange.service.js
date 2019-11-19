@@ -438,6 +438,7 @@ export default class Exchange {
           searchValues,
           configurableOnly: 0,
           typeLicence: accountType,
+          sortColumnName: 'email',
         },
       },
     );

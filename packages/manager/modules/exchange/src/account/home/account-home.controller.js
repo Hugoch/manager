@@ -7,7 +7,6 @@ import get from 'lodash/get';
 import isArray from 'lodash/isArray';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
-import isNull from 'lodash/isNull';
 import isNumber from 'lodash/isNumber';
 import map from 'lodash/map';
 import merge from 'lodash/merge';
@@ -35,6 +34,8 @@ export default class ExchangeAccountHomeController {
     messaging,
     navigation,
     officeAttach,
+    ouiDatagridService,
+    OvhApiEmailExchange,
     OvhApiMe,
     ovhUserPref,
   ) {
@@ -52,6 +53,8 @@ export default class ExchangeAccountHomeController {
     this.messaging = messaging;
     this.navigation = navigation;
     this.officeAttach = officeAttach;
+    this.ouiDatagridService = ouiDatagridService;
+    this.OvhApiEmailExchange = OvhApiEmailExchange;
     this.OvhApiMe = OvhApiMe;
     this.ovhUserPref = ovhUserPref;
   }
@@ -60,6 +63,15 @@ export default class ExchangeAccountHomeController {
     this.$routerParams = this.Exchange.getParams();
     this.hostname = this.Exchange.value.hostname;
     this.webUrl = this.Exchange.value.webUrl;
+    this.bindings = {
+      accounts: {
+        id: 'exchangeAccounts',
+        pagination: {
+          pageNumber: 1,
+          pageSize: 25,
+        },
+      },
+    };
 
     this.linkToSpamTicket = `#/support/tickets?filters={"comparator":"is","field":"serviceName","reference":["${this.$routerParams.productId}"]}`;
     this.initialAccountRetrieval = true;
@@ -165,6 +177,22 @@ export default class ExchangeAccountHomeController {
       });
   }
 
+  onCriteriaChange($criteria) {
+    this.filters = map(
+      $criteria,
+      criterion => [criterion.property || 'primaryEmailAddress', criterion.operator, criterion.value],
+    );
+    this.onPageChange({ offset: 0 });
+    this.ouiDatagridService.refresh(this.bindings.accounts.id, true);
+  }
+
+  onPageChange({ offset, pageSize }) {
+    this.bindings.accounts.pagination.pageNumber = parseInt(offset / pageSize, 10) + 1
+      || this.bindings.accounts.pagination.pageNumber;
+    this.bindings.accounts.pagination.pageSize = pageSize
+      || this.bindings.accounts.pagination.pageSize;
+  }
+
   fetchingAccountCreationOptions() {
     return this.Exchange
       .fetchingAccountCreationOptions(
@@ -185,67 +213,25 @@ export default class ExchangeAccountHomeController {
       });
   }
 
-  fetchAccounts(parameters) {
-    this.gridParameters = merge(
-      this.gridParameters,
-      parameters,
-    );
+  getAccounts() {
+    this.initialAccountRetrieval = true;
 
-    this.gridParameters.searchValues = map(
-      filter(
-        parameters.criteria,
-        criterium => isNull(criterium.property) || criterium.property === 'emailAddress',
-      ),
-      criterium => criterium.value,
-    );
-
-    const accountTypeFilters = map(
-      filter(
-        parameters.criteria,
-        criterium => criterium.property === 'accountLicense',
-      ),
-      criterium => criterium.value,
-    );
-
-    this.gridParameters.accountTypeFilter = accountTypeFilters.length === 2 ? '' : accountTypeFilters[0];
-
-    return this.Exchange
-      .fetchAccounts(
+    return this
+      .exchangeAccount
+      .getAccounts(
         this.$routerParams.organization,
         this.$routerParams.productId,
-        parameters.pageSize,
-        parameters.offset - 1,
-        this.gridParameters.searchValues,
-        this.gridParameters.accountTypeFilter,
+        this.bindings.accounts.pagination.pageSize,
+        this.bindings.accounts.pagination.pageNumber,
+        { field: 'primaryEmailAddress', order: 'ASC' },
+        this.filters,
       )
-      .then((accounts) => {
-        this.accounts = this.formatAccountsForDatagrid(
-          accounts,
-          parameters.sort,
-          parameters.criteria,
-        );
-
-        this.datagridData = {
-          data: this.accounts,
-          meta: {
-            totalCount: accounts.count,
-          },
-        };
-
-        if (this.gridColumnParametersAlreadyExist) {
-          return null;
-        }
-
-        const newCompanyColumnParameter = this.computeDefaultCompanyColumnParameter();
-        const changesHaveBeenDone = this.computeDatagridColumnParameters(
-          newCompanyColumnParameter,
-        );
-
-        return changesHaveBeenDone
-          ? this.savingDatagridColumnParameters()
-          : null;
-      })
-      .then(() => this.datagridData)
+      .then(accounts => ({
+        data: accounts.data,
+        meta: {
+          totalCount: accounts.headers['x-pagination-elements'],
+        },
+      }))
       .catch((error) => {
         this.messaging.writeError(
           this.$translate.instant('exchange_accounts_fetchAccounts_error'),

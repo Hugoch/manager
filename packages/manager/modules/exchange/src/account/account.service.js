@@ -1,4 +1,7 @@
+import forEach from 'lodash/forEach';
 import get from 'lodash/get';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
 import isString from 'lodash/isString';
 
 export default class ExchangeAccount {
@@ -10,6 +13,7 @@ export default class ExchangeAccount {
     exchangeSelectedService,
     exchangeStates,
     exchangeVersion,
+    OvhApiEmailExchange,
     OvhHttp,
   ) {
     this.Exchange = Exchange;
@@ -18,6 +22,7 @@ export default class ExchangeAccount {
     this.exchangeSelectedService = exchangeSelectedService;
     this.exchangeStates = exchangeStates;
     this.exchangeVersion = exchangeVersion;
+    this.OvhApiEmailExchange = OvhApiEmailExchange;
     this.OvhHttp = OvhHttp;
 
     this.EVENTS = {
@@ -105,5 +110,33 @@ export default class ExchangeAccount {
     }
 
     return account.domain.toUpperCase() === this.PLACEHOLDER_DOMAIN_NAME.toUpperCase();
+  }
+
+  getAccounts(organizationName, exchangeService, limit, pageNumber, { field, order }, filters) {
+    const toExecute = this
+      .OvhApiEmailExchange
+      .service()
+      .Iceberg()
+      .query()
+      .expand('CachedObjectList-Pages')
+      .limit(limit)
+      .offset(pageNumber) // the offset is actually a page number
+      .sort(field, order);
+
+    if (isArray(filters) && !isEmpty(filters)) {
+      forEach(
+        filters,
+        (filter) => {
+          toExecute.addFilter(...filter);
+        },
+      );
+    }
+
+    return toExecute
+      .execute({
+        exchangeService,
+        organizationName,
+      }, true)
+      .$promise;
   }
 }
