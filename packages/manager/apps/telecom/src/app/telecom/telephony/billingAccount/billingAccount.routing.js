@@ -38,6 +38,18 @@ export default /* @ngInject */ ($stateProvider) => {
           .then(() => true)
           .catch(() => false);
       },
+      currentActiveLink: /* @ngInject */ ($transition$, $state) => () => $state
+        .href($state.current.name, $transition$.params()),
+
+      billingAccountLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount', { billingAccount: billingAccountId }),
+      servicesLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount.services', { billingAccount: billingAccountId }),
+      administrationLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount.administration', { billingAccount: billingAccountId }),
+      billingLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount.billing', { billingAccount: billingAccountId }),
+      orderAliasLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount.orderAlias', { billingAccount: billingAccountId }),
+      phonebookLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount.phonebook', { billingAccount: billingAccountId }),
+      abbreviatedNumbersLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount.abbreviatedNumbers', { billingAccount: billingAccountId }),
+      manageContactsLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount.manageContacts', { billingAccount: billingAccountId }),
+      guidesLink: /* @ngInject */ ($state, billingAccountId) => $state.href('telecom.telephony.billingAccount.guides', { billingAccount: billingAccountId }),
     },
     translations: { value: ['..', '.', './dashboard'], format: 'json' },
   });
