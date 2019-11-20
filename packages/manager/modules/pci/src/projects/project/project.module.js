@@ -10,6 +10,7 @@ import analyticsDataPlatform from './analytics-data-platform';
 import billing from './billing';
 import contacts from './contacts';
 import creating from './creating';
+import dataProcessing from './data-processing';
 import edit from './edit';
 import failoverIps from './failover-ips';
 import instances from './instances';
@@ -37,6 +38,7 @@ angular
     billing,
     contacts,
     creating,
+    dataProcessing,
     edit,
     failoverIps,
     instances,

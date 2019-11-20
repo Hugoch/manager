@@ -1,0 +1,34 @@
+<section>
+    <!-- page header -->
+    <oui-page-header class="mb-2"
+                     data-heading="{{ ::'data_processing_submit_job_title' | translate }}"></oui-page-header>
+    <!-- page content -->
+    <div>
+        <p data-translate="data_processing_submit_job_description"></p>
+
+        <!-- stepper -->
+        <div>
+            <oui-stepper>
+                <!-- step 1 - select region -->
+                <oui-step-form
+                    data-header="{{ ::'data_processing_submit_job_stepper_region_title' | translate }}">
+                    <data-processing-submit-job-region-selector-component></data-processing-submit-job-region-selector-component>
+                    blabla
+                </oui-step-form>
+                <!-- step 2 - select job type -->
+                <oui-step-form
+                    data-header="{{ ::'data_processing_submit_job_stepper_job_type_title' | translate }}">
+                    <data-processing-submit-job-type-selector></data-processing-submit-job-type-selector>
+                </oui-step-form>
+                <!-- step 3 - job sizing -->
+                <oui-step-form
+                    data-header="{{ ::'data_processing_submit_job_stepper_sizing_title' | translate }}">
+                </oui-step-form>
+                <!-- step 4 - configure job -->
+                <oui-step-form
+                    data-header="{{ ::'data_processing_submit_job_stepper_configure_title' | translate }}">
+                </oui-step-form>
+            </oui-stepper>
+        </div>
+    </div>
+</section>

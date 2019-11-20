@@ -1,0 +1,16 @@
+<div ng-init="$ctrl.jobType = {id:'a', name: 'Value A'}">
+    <oui-select-picker
+        data-name="jobType"
+        data-match="name"
+        data-label="Spark">
+        <span
+            class="oui-select-picker__section">{{ ::'data_processing_submit_job_spark_description' | translate }}</span>
+    </oui-select-picker>
+    <oui-select-picker
+        data-name="jobType"
+        data-match="name"
+        data-label="PySpark">
+        <span
+            class="oui-select-picker__section">{{ ::'data_processing_submit_job_pyspark_description' | translate }}</span>
+    </oui-select-picker>
+</div>
