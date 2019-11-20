@@ -9,7 +9,6 @@ import dataProcessingSubmitJobComponent from './submit-job.component';
 
 const moduleName = 'ovhManagerDataProcessingSubmitJobComponent';
 
-console.log('SUBMIT module');
 angular
   .module(moduleName, [
     'ui.router',

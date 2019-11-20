@@ -1,19 +1,16 @@
 import angular from 'angular';
 import '@uirouter/angularjs';
-
-import regionsList from '../../../../../components/project/regions-list';
 import regionSelectorComponent from './region-selector.component';
+import regionsList from '../../../../../components/project/regions-list';
 
 const moduleName = 'ovhManagerDataProcessingSubmitJobRegionSelectorComponent';
-
-console.log('region-selector :: module');
 
 angular
   .module(moduleName, [
     'ui.router',
     regionsList,
   ])
-  .component('dataProcessingSubmitJobRegionSelectorComponent', regionSelectorComponent)
+  .component('dataprocessingSubmitJobRegionSelectorComponent', regionSelectorComponent)
   .run(/* @ngTranslationsInject:json ./translations */);
 
 export default moduleName;
