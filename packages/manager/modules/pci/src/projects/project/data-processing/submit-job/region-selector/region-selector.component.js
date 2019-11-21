@@ -4,5 +4,8 @@ import template from './region-selector.html';
 export default {
   template,
   controller,
-  bindings: {},
+  bindings: {
+    regions: '<',
+    onChangeHandler: '<',
+  },
 };

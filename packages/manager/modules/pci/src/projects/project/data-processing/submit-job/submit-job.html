@@ -11,19 +11,21 @@
             <oui-stepper>
                 <!-- step 1 - select region -->
                 <oui-step-form
-                    data-header="{{ ::'data_processing_submit_job_stepper_region_title' | translate }}">
+                    data-header="{{ ::'data_processing_submit_job_stepper_region_title' | translate }}"
+                    data-on-focus="$ctrl.updateAvailableRegions()">
                     <dataprocessing-submit-job-region-selector-component
                         data-regions="$ctrl.regions"
                         data-display-selected-region="$ctrl.displaySelectedRegion"
-                        data-on-data-change="$ctrl.onRegionsInformationChange(data)"
+                        data-on-change-handler="$ctrl.onChangeRegionHandler"
                     >
                     </dataprocessing-submit-job-region-selector-component>
-                    blabla
                 </oui-step-form>
                 <!-- step 2 - select job type -->
                 <oui-step-form
                     data-header="{{ ::'data_processing_submit_job_stepper_job_type_title' | translate }}">
-                    <dataprocessing-submit-job-type-selector></dataprocessing-submit-job-type-selector>
+                    <dataprocessing-submit-job-type-selector
+                        data-on-change-handler="$ctrl.onChangeJobTypeHandler">
+                    </dataprocessing-submit-job-type-selector>
                 </oui-step-form>
                 <!-- step 3 - job sizing -->
                 <oui-step-form
