@@ -1,0 +1,20 @@
+{
+  "data_processing_submit_job_stepper_spark_driver_template_label": "Driver template",
+  "data_processing_submit_job_stepper_spark_worker_template_label": "Worker template",
+  "data_processing_submit_job_stepper_spark_worker_count_label": "Worker count",
+  "data_processing_submit_job_stepper_spark_worker_count_description": "Select the number of workers for your job",
+  "data_processing_submit_job_stepper_spark_advanced": "Advanced configuration",
+  "data_processing_submit_job_stepper_spark_standard": "Standard configuration",
+  "data_processing_submit_job_stepper_spark_driver_cores_label": "Driver vCores",
+  "data_processing_submit_job_stepper_spark_driver_cores_description": "Select the number of vCores for Spark driver",
+  "data_processing_submit_job_stepper_spark_driver_memory_label": "Driver memory",
+  "data_processing_submit_job_stepper_spark_driver_memory_description": "Select the amount of memory for Spark driver",
+  "data_processing_submit_job_stepper_spark_driver_memory_overhead_label": "Driver memory overhead",
+  "data_processing_submit_job_stepper_spark_driver_memory_overhead_description": "Select the amount of overhead memory for Spark driver",
+  "data_processing_submit_job_stepper_spark_worker_cores_label": "Worker vCores",
+  "data_processing_submit_job_stepper_spark_worker_cores_description": "Select the number of vCores per Spark worker",
+  "data_processing_submit_job_stepper_spark_worker_memory_label": "Worker memory",
+  "data_processing_submit_job_stepper_spark_worker_memory_description": "Select the amount of memory per Spark worker",
+  "data_processing_submit_job_stepper_spark_worker_memory_overhead_label": "Worker memory overhead",
+  "data_processing_submit_job_stepper_spark_worker_memory_overhead_description": "Select the amount of memory overhead per Spark worker"
+}

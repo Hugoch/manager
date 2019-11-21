@@ -11,7 +11,9 @@ export default class {
     // initialize component state
     this.state = {
       region: null,
+      jobType: 'spark',
     };
+    this.jobSizing = {};
   }
 
   /**
@@ -35,8 +37,16 @@ export default class {
     console.log(this.state);
   }
 
-  onChangeJobTypeHandler(value) {
-    this.state.jobType = value;
-    console.log(value);
+  /**
+   * Handler for job type selector job
+   * @param jobType Selected job type
+   */
+  onChangeJobTypeHandler(jobType) {
+    this.state.jobType = jobType;
+    console.log(this.state);
+  }
+
+  onSubmit() {
+    console.log(this.jobSizing);
   }
 }

@@ -4,6 +4,7 @@ import '@uirouter/angularjs';
 import routing from './submit-job.routing';
 import regionSelector from './region-selector';
 import jobTypeSelector from './jobtype-selector';
+import sparkSizing from './spark-sizing';
 
 import dataProcessingSubmitJobComponent from './submit-job.component';
 
@@ -14,6 +15,7 @@ angular
     'ui.router',
     regionSelector,
     jobTypeSelector,
+    sparkSizing,
   ])
   .config(routing)
   .component('dataProcessingSubmitJobComponent', dataProcessingSubmitJobComponent)

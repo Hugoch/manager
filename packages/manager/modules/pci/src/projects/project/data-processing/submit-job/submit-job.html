@@ -29,7 +29,11 @@
                 </oui-step-form>
                 <!-- step 3 - job sizing -->
                 <oui-step-form
-                    data-header="{{ ::'data_processing_submit_job_stepper_sizing_title' | translate }}">
+                    data-header="{{ ::'data_processing_submit_job_stepper_sizing_title' | translate }}"
+                    data-on-submit="$ctrl.submit">
+                    <p data-translate=""></p>
+                    <dataprocessing-submit-job-spark-sizing data-values="$ctrl.jobSizing">
+                    </dataprocessing-submit-job-spark-sizing>
                 </oui-step-form>
                 <!-- step 4 - configure job -->
                 <oui-step-form
