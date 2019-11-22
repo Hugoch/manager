@@ -1,0 +1,124 @@
+<div data-ui-view>
+    <oui-page-header class="job-title__header"
+                     data-heading="{{ $ctrl.job.name }}"
+                     data-description="{{ $ctrl.job.id }}">
+        <oui-guide-menu data-text="{{ :: 'pci_project_guides_header' | translate }}">
+            <oui-guide-menu-item
+                href="{{ $ctrl.guideUrl }}"
+                data-external>
+                <span data-translate="pci_project_guides_header_all_guides"></span>
+            </oui-guide-menu-item>
+        </oui-guide-menu>
+
+        <oui-header-tabs>
+            <oui-header-tabs-item
+                data-text="{{ ::'data_processing_details_dashboard_label' | translate }}"
+                data-state="pci.projects.project.data-processing.job-details"
+                data-state-params="{ jobId: $ctrl.job.id }"
+                data-active>
+            </oui-header-tabs-item>
+            <oui-header-tabs-item
+                data-text="{{ ::'data_processing_details_logs_label' | translate }}"
+                data-state="pci.projects.project.data-processing.job-details.logs"
+                data-state-params="{ jobId: $ctrl.job.id }">
+            </oui-header-tabs-item>
+        </oui-header-tabs>
+    </oui-page-header>
+    <div class="job-details__content">
+        <div class="col-md-4">
+            <oui-tile class="h-100"
+                      data-heading="{{ ::'data_processing_details_information_label' | translate }}">
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_information_status_label' | translate }}">
+                    <oui-tile-description>
+                        {{ $ctrl.job.status }}
+                    </oui-tile-description>
+                </oui-tile-definition>
+                <oui-tile-definition data-term="{{ :: 'data_processing_details_information_region_label' | translate }}"
+                                     data-description="{{ $ctrl.job.region }}">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_information_creation_date_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_information_elapsed_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+            </oui-tile>
+        </div>
+        <div class="col-md-4">
+            <oui-tile class="h-100"
+                      data-heading="{{ ::'data_processing_details_actions_label' | translate }}">
+                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_show_ui_label' | translate }}"
+                                 href="#"
+                                 data-external>
+                    {{ ::'data_processing_details_actions_show_ui_label' | translate }}
+                </oui-tile-button>
+                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_show_grafana_label' | translate }}"
+                                 href="#"
+                                 data-external>
+                    {{ ::'data_processing_details_actions_show_grafana_label' | translate }}
+                </oui-tile-button>
+                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_browse_swift_label' | translate }}"
+                                 href="#">
+                    {{ ::'data_processing_details_actions_browse_swift_label' | translate }}
+                </oui-tile-button>
+                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_relaunch_label' | translate }}"
+                                 href="#">
+                    {{ ::'data_processing_details_actions_relaunch_label' | translate }}
+                </oui-tile-button>
+                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_save_template_label' | translate }}"
+                                 href="#">
+                    {{ ::'data_processing_details_actions_save_template_label' | translate }}
+                </oui-tile-button>
+                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_show_billing_label' | translate }}"
+                                 href="#">
+                    {{ ::'data_processing_details_actions_show_billing_label' | translate }}
+                </oui-tile-button>
+                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_terminate_label' | translate }}"
+                                 href="#">
+                    {{ ::'data_processing_details_actions_terminate_label' | translate }}
+                </oui-tile-button>
+            </oui-tile>
+        </div>
+        <div class="col-md-4">
+            <oui-tile class="h-100"
+                      data-heading="{{ ::'data_processing_details_configuration_label' | translate }}">
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_configuration_cores_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_configuration_memory_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_configuration_executor_count_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_configuration_swift_container_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_configuration_job_type_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_configuration_jar_file_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_configuration_main_class_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+                <oui-tile-definition
+                    data-term="{{ :: 'data_processing_details_configuration_arguments_label' | translate }}"
+                    data-description="This is a description">
+                </oui-tile-definition>
+            </oui-tile>
+        </div>
+    </div>
+</div>
+

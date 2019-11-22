@@ -5,15 +5,15 @@ import routing from './data-processing.routing';
 import dataProcessingComponent from './data-processing.component';
 import dataProcessingService from './data-processing.service';
 import submitJob from './submit-job';
+import jobDetails from './job-details';
 
 const moduleName = 'ovhManagerDataProcessingComponent';
-
-console.log('MODULE');
 
 angular
   .module(moduleName, [
     'ngOvhSwimmingPoll',
     submitJob,
+    jobDetails,
   ])
   .config(routing)
   .component('dataProcessingComponent', dataProcessingComponent)
