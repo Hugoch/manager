@@ -12,8 +12,11 @@ export default class {
     this.state = {
       region: null,
       jobType: 'spark',
+      jobSizing: {},
     };
-    this.jobSizing = {};
+    // we use this trick to trigger a state update of child component. This circumvent the missing
+    // onChange event on oui-field components.
+    this.jobSizingValidate = false;
   }
 
   /**
@@ -46,7 +49,9 @@ export default class {
     console.log(this.state);
   }
 
-  onSubmit() {
-    console.log(this.jobSizing);
+  onSubmitJobSizingHandler() {
+    // trigger job sizing component values update
+    this.jobSizingValidate = !this.jobSizingValidate;
+    setTimeout(() => console.log(this.state), 0);
   }
 }

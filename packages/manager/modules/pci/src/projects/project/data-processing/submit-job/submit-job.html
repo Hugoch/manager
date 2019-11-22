@@ -16,8 +16,7 @@
                     <dataprocessing-submit-job-region-selector-component
                         data-regions="$ctrl.regions"
                         data-display-selected-region="$ctrl.displaySelectedRegion"
-                        data-on-change-handler="$ctrl.onChangeRegionHandler"
-                    >
+                        data-on-change-handler="$ctrl.onChangeRegionHandler">
                     </dataprocessing-submit-job-region-selector-component>
                 </oui-step-form>
                 <!-- step 2 - select job type -->
@@ -30,14 +29,18 @@
                 <!-- step 3 - job sizing -->
                 <oui-step-form
                     data-header="{{ ::'data_processing_submit_job_stepper_sizing_title' | translate }}"
-                    data-on-submit="$ctrl.submit">
+                    data-on-submit="$ctrl.onSubmitJobSizingHandler(form)">
                     <p data-translate=""></p>
-                    <dataprocessing-submit-job-spark-sizing data-values="$ctrl.jobSizing">
+                    <dataprocessing-submit-job-spark-sizing
+                        data-values="$ctrl.state.jobSizing"
+                        data-validate="$ctrl.jobSizingValidate">
                     </dataprocessing-submit-job-spark-sizing>
                 </oui-step-form>
                 <!-- step 4 - configure job -->
                 <oui-step-form
                     data-header="{{ ::'data_processing_submit_job_stepper_configure_title' | translate }}">
+                    <dataprocessing-submit-job-spark-config>
+                    </dataprocessing-submit-job-spark-config>
                 </oui-step-form>
             </oui-stepper>
         </div>

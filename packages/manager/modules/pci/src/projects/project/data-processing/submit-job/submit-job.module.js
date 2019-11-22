@@ -5,6 +5,7 @@ import routing from './submit-job.routing';
 import regionSelector from './region-selector';
 import jobTypeSelector from './jobtype-selector';
 import sparkSizing from './spark-sizing';
+import sparkConfig from './spark-config';
 
 import dataProcessingSubmitJobComponent from './submit-job.component';
 
@@ -16,6 +17,7 @@ angular
     regionSelector,
     jobTypeSelector,
     sparkSizing,
+    sparkConfig,
   ])
   .config(routing)
   .component('dataProcessingSubmitJobComponent', dataProcessingSubmitJobComponent)

@@ -10,7 +10,14 @@ export default class {
   constructor() {
     // let's do some bindings
     this.onClickAdvancedConfigurationHandler = this.onClickAdvancedConfigurationHandler.bind(this);
-    this.onChange = this.onChange.bind(this);
+    // create state
+    this.state = {};
+  }
+
+  $onInit() {
+    this.driverTemplates = DRIVER_TEMPLATES;
+    this.workerTemplates = WORKER_TEMPLATES;
+    this.minMemoryOverheadMb = MIN_MEMORY_OVERHEAD_MB;
     // initialize component state
     this.state = {
       driverTemplate: '1',
@@ -26,10 +33,14 @@ export default class {
     };
   }
 
-  $onInit() {
-    this.driverTemplates = DRIVER_TEMPLATES;
-    this.workerTemplates = WORKER_TEMPLATES;
-    this.minMemoryOverheadMb = MIN_MEMORY_OVERHEAD_MB;
+  /**
+   * Event handler that is called each time component is updated
+   * Update component `values` binding to let know our parent component about state update
+   * Parent must use `validate` binding to trigger changes.
+   */
+  $onChanges() {
+    Object.assign(this.values, this.state);
+    console.log(this.values);
   }
 
   /**
@@ -63,9 +74,5 @@ export default class {
       workerMemoryGb: workerTpl.memory / 1e9,
       workerMemoryOverheadMb,
     });
-  }
-
-  onChange() {
-    this.values = this.state;
   }
 }

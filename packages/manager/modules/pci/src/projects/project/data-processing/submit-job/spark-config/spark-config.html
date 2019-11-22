@@ -1,0 +1,36 @@
+<form novalidate name="inputForm">
+    <oui-field data-label="{{:: 'data_processing_submit_job_stepper_spark_job_name_label' | translate }}"
+               data-help-text="{{:: 'data_processing_submit_job_stepper_spark_job_name_help' | translate }}" size="xl">
+        <input class="oui-input"
+               type="text"
+               id="job-name"
+               name="job-name"
+               ng-model="$ctrl.state.jobName"
+               required
+               minlength="3"
+               maxlength="32">
+    </oui-field>
+    <oui-field data-label="{{:: 'data_processing_submit_job_stepper_spark_jar_file_label' | translate }}"
+               data-help-text="{{:: 'data_processing_submit_job_stepper_spark_jar_file_help' | translate }}" size="xl">
+        <input class="oui-input"
+               type="text"
+               id="jar-file"
+               name="jar-file"
+               data-ng-model="$ctrl.state.jarFile"
+               required
+               minlength="3"
+               maxlength="32">
+    </oui-field>
+    <oui-field data-label="{{:: 'data_processing_submit_job_stepper_spark_main_class_label' | translate }}"
+               data-help-text="{{:: 'data_processing_submit_job_stepper_spark_main_class_help' | translate }}"
+               size="xl">
+        <input class="oui-input"
+               type="text"
+               id="main-class"
+               name="main-class"
+               data-ng-model="$ctrl.state.mainClass"
+               required
+               minlength="3"
+               maxlength="32">
+    </oui-field>
+</form>
