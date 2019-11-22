@@ -1,5 +1,9 @@
 .sizing__advanced-button {
   padding: 0 0 1rem 0;
+
+  &:disabled {
+    display: none;
+  }
 }
 
 .sizing__advanced-units-container {

@@ -10,6 +10,42 @@
                minlength="3"
                maxlength="32">
     </oui-field>
+    <oui-field
+        data-label="{{:: 'data_processing_submit_job_stepper_spark_version_label' | translate }}"
+        data-size="l">
+        <label class="oui-select">
+            <select name="spark-version"
+                    class="oui-select__input"
+                    data-ng-model="$ctrl.state.sparkVersion"
+                    required>
+                <option
+                    ng-repeat="version in $ctrl.sparkVersions"
+                    value="{{ version.name }}">
+                    {{ version.name }}
+                </option>
+            </select>
+            <span class="oui-icon oui-icon-chevron-down" aria-hidden="true"></span>
+        </label>
+    </oui-field>
+    <oui-field
+        data-label="{{:: 'data_processing_submit_job_stepper_spark_swift_label' | translate }}"
+        data-size="l">
+        <label class="oui-select">
+            <select name="swift-container" class="oui-select__input"
+                    data-ng-model="$ctrl.state.swiftContainer"
+                    required>
+                <option ng-value="undefined">{{:: 'data_processing_submit_job_stepper_spark_swift_placeholder' |
+                    translate }}
+                </option>
+                <option
+                    ng-repeat="container in $ctrl.swiftContainers"
+                    value="{{ container }}">
+                    {{ container }}
+                </option>
+            </select>
+            <span class="oui-icon oui-icon-chevron-down" aria-hidden="true"></span>
+        </label>
+    </oui-field>
     <oui-field data-label="{{:: 'data_processing_submit_job_stepper_spark_jar_file_label' | translate }}"
                data-help-text="{{:: 'data_processing_submit_job_stepper_spark_jar_file_help' | translate }}" size="xl">
         <input class="oui-input"
@@ -34,3 +70,23 @@
                maxlength="32">
     </oui-field>
 </form>
+<span>
+     {{:: 'data_processing_submit_job_stepper_spark_arguments_label' | translate }}
+</span>
+<oui-chips class="sparkconfig__arguments"
+           data-items="$ctrl.state.arguments"
+           data-on-remove="$ctrl.state.arguments=items"
+           data-stacked
+           data-closable>
+</oui-chips>
+<oui-field size="xl">
+    <input class="oui-input"
+           type="text"
+           id="argument"
+           name="argument"
+           data-ng-model="$ctrl.currentArgument"
+           data-ng-keyup="$event.keyCode == 13 && $ctrl.onSubmitArgumentHandler($event)"
+           placeholder="{{:: 'data_processing_submit_job_stepper_spark_arguments_placeholder' | translate }}"
+           minlength="1"
+           maxlength="32">
+</oui-field>

@@ -1,3 +1,4 @@
+import './spark-config.scss';
 import controller from './spark-config.controller';
 import template from './spark-config.html';
 
