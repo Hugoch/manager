@@ -55,10 +55,7 @@
             <oui-column data-title="::'data_processing_job_status' | translate"
                         data-property="status"
                         data-sortable>
-                <span class="oui-status"
-                      data-ng-class="'oui-status_' + $ctrl.getClassFromStatus($row.status)"
-                      data-ng-bind=":: ('data_processing_job_status_' + $row.status.toLowerCase()) | translate">
-                </span>
+                <dataprocessing-job-status data-status="$row.status"></dataprocessing-job-status>
             </oui-column>
             <oui-action-menu data-align="end" data-compact>
                 <oui-action-menu-item

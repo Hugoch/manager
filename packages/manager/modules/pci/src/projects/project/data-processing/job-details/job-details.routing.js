@@ -2,7 +2,10 @@ export default /* @ngInject */$stateProvider => $stateProvider.state('pci.projec
   url: '/:jobId',
   component: 'dataProcessingJobDetailsComponent',
   resolve: {
-    jobId: $transition$ => $transition$.params().jobId, // retrieve job id from url params
+    // retrieve project id from url params
+    projectId: $transition$ => $transition$.params().projectId,
+    // retrieve job id from url params
+    jobId: $transition$ => $transition$.params().jobId,
     job: ( // retrieve job from service
       dataProcessingService,
       jobId,

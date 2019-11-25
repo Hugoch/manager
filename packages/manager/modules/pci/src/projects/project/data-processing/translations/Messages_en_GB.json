@@ -13,6 +13,7 @@
   "data_processing_job_status_failed": "Failed",
   "data_processing_job_status_terminated": "Terminated",
   "data_processing_job_status_completed": "Completed",
+  "data_processing_job_status_unknown": "Unknown",
   "data_processing_create_button_label": "Submit a new job",
   "data_processing_job_name": "Name",
   "data_processing_list_button_job_details": "Job details",

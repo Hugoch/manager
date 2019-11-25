@@ -22,5 +22,9 @@
   "data_processing_details_configuration_job_type_label": "Job type",
   "data_processing_details_configuration_jar_file_label": "JAR file",
   "data_processing_details_configuration_main_class_label": "Main class",
-  "data_processing_details_configuration_arguments_label": "Arguments"
+  "data_processing_details_configuration_arguments_label": "Arguments",
+  "data_processing_details_terminate_job_title": "Terminate job",
+  "data_processing_details_terminate_job_description": "You are about to terminate job <b>{{ jobName }}</b> ({{ jobId }}). <br />You may loose currently processed data.",
+  "data_processing_details_terminate_job_delete_button": "Terminate job",
+  "data_processing_details_terminate_job_cancel_button": "Cancel"
 }

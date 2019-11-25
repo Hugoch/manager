@@ -1,0 +1,6 @@
+{
+  "data_processing_details_terminate_job_title": "Terminate job",
+  "data_processing_details_terminate_job_description": "You are about to terminate job {{ jobName }} ({{ jobId }}). You may loose currently processed data.",
+  "data_processing_details_terminate_job_delete_button": "Terminate job",
+  "data_processing_details_terminate_job_cancel_button": "Cancel"
+}

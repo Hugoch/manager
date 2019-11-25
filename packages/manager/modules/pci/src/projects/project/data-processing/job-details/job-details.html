@@ -25,97 +25,120 @@
         </oui-header-tabs>
     </oui-page-header>
     <div class="job-details__content">
+        <!-- Tile :: Information -->
         <div class="col-md-4">
             <oui-tile class="h-100"
                       data-heading="{{ ::'data_processing_details_information_label' | translate }}">
+                <!-- Tile item :: Status -->
                 <oui-tile-definition
                     data-term="{{ :: 'data_processing_details_information_status_label' | translate }}">
                     <oui-tile-description>
-                        {{ $ctrl.job.status }}
+                        <dataprocessing-job-status data-status="$ctrl.job.status"></dataprocessing-job-status>
                     </oui-tile-description>
                 </oui-tile-definition>
+                <!-- Tile item :: Region -->
                 <oui-tile-definition data-term="{{ :: 'data_processing_details_information_region_label' | translate }}"
                                      data-description="{{ $ctrl.job.region }}">
                 </oui-tile-definition>
+                <!-- Tile item :: Created -->
                 <oui-tile-definition
                     data-term="{{ :: 'data_processing_details_information_creation_date_label' | translate }}"
-                    data-description="This is a description">
+                    data-description="{{ $ctrl.job.creation_date * 1000. | momentCalendar }}">
                 </oui-tile-definition>
+                <!-- Tile item :: Elapsed time -->
                 <oui-tile-definition
                     data-term="{{ :: 'data_processing_details_information_elapsed_label' | translate }}"
-                    data-description="This is a description">
+                    data-description="{{ ($ctrl.job.end_date - $ctrl.job.start_date) * 1000. | duration }}">
                 </oui-tile-definition>
             </oui-tile>
         </div>
+        <!-- Tile :: Actions -->
         <div class="col-md-4">
             <oui-tile class="h-100"
                       data-heading="{{ ::'data_processing_details_actions_label' | translate }}">
-                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_show_ui_label' | translate }}"
-                                 href="#"
+                <!-- Tile item :: Job UI -->
+                <oui-tile-button title="{{ ::'data_processing_details_actions_show_ui_label' | translate }}"
+                                 data-href="{{ $ctrl.DATA_PROCESSING_UI_URL[$ctrl.job.region]+'/'+$ctrl.job.id }}"
                                  data-external>
                     {{ ::'data_processing_details_actions_show_ui_label' | translate }}
                 </oui-tile-button>
-                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_show_grafana_label' | translate }}"
+                <!-- Tile item :: Grafana -->
+                <oui-tile-button title="{{ ::'data_processing_details_actions_show_grafana_label' | translate }}"
                                  href="#"
                                  data-external>
                     {{ ::'data_processing_details_actions_show_grafana_label' | translate }}
                 </oui-tile-button>
-                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_browse_swift_label' | translate }}"
+                <!-- Tile item :: Browse Swift -->
+                <oui-tile-button title="{{ ::'data_processing_details_actions_browse_swift_label' | translate }}"
                                  href="#">
                     {{ ::'data_processing_details_actions_browse_swift_label' | translate }}
                 </oui-tile-button>
-                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_relaunch_label' | translate }}"
+                <!-- Tile item :: Relaunch -->
+                <oui-tile-button title="{{ ::'data_processing_details_actions_relaunch_label' | translate }}"
                                  href="#">
                     {{ ::'data_processing_details_actions_relaunch_label' | translate }}
                 </oui-tile-button>
-                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_save_template_label' | translate }}"
+                <!-- Tile item :: Save template -->
+                <oui-tile-button title="{{ ::'data_processing_details_actions_save_template_label' | translate }}"
                                  href="#">
                     {{ ::'data_processing_details_actions_save_template_label' | translate }}
                 </oui-tile-button>
-                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_show_billing_label' | translate }}"
+                <!-- Tile item :: Show billing -->
+                <oui-tile-button title="{{ ::'data_processing_details_actions_show_billing_label' | translate }}"
                                  href="#">
                     {{ ::'data_processing_details_actions_show_billing_label' | translate }}
                 </oui-tile-button>
-                <oui-tile-button aria-label="{{ ::'data_processing_details_actions_terminate_label' | translate }}"
-                                 href="#">
+                <!-- Tile item :: Terminate job -->
+                <oui-tile-button title="{{ ::'data_processing_details_actions_terminate_label' | translate }}"
+                                 data-on-click="$ctrl.terminateJob()"
+                                 class="details__action-button__danger">
                     {{ ::'data_processing_details_actions_terminate_label' | translate }}
                 </oui-tile-button>
             </oui-tile>
         </div>
+        <!-- Tile :: Configuration -->
         <div class="col-md-4">
             <oui-tile class="h-100"
                       data-heading="{{ ::'data_processing_details_configuration_label' | translate }}">
                 <oui-tile-definition
-                    data-term="{{ :: 'data_processing_details_configuration_cores_label' | translate }}"
-                    data-description="This is a description">
+                    data-term="{{ ::'data_processing_details_configuration_cores_label' | translate }}"
+                    title="{{ ::'data_processing_details_configuration_cores_label' | translate }}"
+                    data-description="{{ $ctrl.job.engine_parameters.driver_cores }}/{{ $ctrl.job.engine_parameters.executor_cores }}">
                 </oui-tile-definition>
                 <oui-tile-definition
-                    data-term="{{ :: 'data_processing_details_configuration_memory_label' | translate }}"
-                    data-description="This is a description">
+                    data-term="{{ ::'data_processing_details_configuration_memory_label' | translate }}"
+                    title="{{ ::'data_processing_details_configuration_memory_label' | translate }}"
+                    data-description="{{ $ctrl.job.engine_parameters.driver_memory | memory:'G' }}/{{ $ctrl.job.engine_parameters.executor_memory | memory:'G'  }}">
                 </oui-tile-definition>
                 <oui-tile-definition
-                    data-term="{{ :: 'data_processing_details_configuration_executor_count_label' | translate }}"
-                    data-description="This is a description">
+                    data-term="{{ ::'data_processing_details_configuration_executor_count_label' | translate }}"
+                    title="{{ ::'data_processing_details_configuration_executor_count_label' | translate }}"
+                    data-description="{{ $ctrl.job.engine_parameters.executor_num }}">
                 </oui-tile-definition>
                 <oui-tile-definition
-                    data-term="{{ :: 'data_processing_details_configuration_swift_container_label' | translate }}"
-                    data-description="This is a description">
+                    data-term="{{ ::'data_processing_details_configuration_swift_container_label' | translate }}"
+                    title="{{ ::'data_processing_details_configuration_swift_container_label' | translate }}"
+                    data-description="{{ $ctrl.job.container_name }}">
                 </oui-tile-definition>
                 <oui-tile-definition
-                    data-term="{{ :: 'data_processing_details_configuration_job_type_label' | translate }}"
-                    data-description="This is a description">
+                    data-term="{{ ::'data_processing_details_configuration_job_type_label' | translate }}"
+                    title="{{ ::'data_processing_details_configuration_job_type_label' | translate }}"
+                    data-description="{{ $ctrl.job.engine_parameters.job_type }}">
                 </oui-tile-definition>
                 <oui-tile-definition
-                    data-term="{{ :: 'data_processing_details_configuration_jar_file_label' | translate }}"
-                    data-description="This is a description">
+                    data-term="{{ ::'data_processing_details_configuration_jar_file_label' | translate }}"
+                    title="{{ ::'data_processing_details_configuration_jar_file_label' | translate }}"
+                    data-description="{{ $ctrl.job.engine_parameters.jar_file }}">
                 </oui-tile-definition>
                 <oui-tile-definition
-                    data-term="{{ :: 'data_processing_details_configuration_main_class_label' | translate }}"
-                    data-description="This is a description">
+                    data-term="{{ ::'data_processing_details_configuration_main_class_label' | translate }}"
+                    title="{{ ::'data_processing_details_configuration_main_class_label' | translate }}"
+                    data-description="{{ $ctrl.job.engine_parameters.main_class }}">
                 </oui-tile-definition>
                 <oui-tile-definition
-                    data-term="{{ :: 'data_processing_details_configuration_arguments_label' | translate }}"
-                    data-description="This is a description">
+                    data-term="{{ ::'data_processing_details_configuration_arguments_label' | translate }}"
+                    title="{{ $ctrl.job.engine_parameters.arguments }}"
+                    data-description="{{ $ctrl.job.engine_parameters.arguments }}">
                 </oui-tile-definition>
             </oui-tile>
         </div>

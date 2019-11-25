@@ -3,7 +3,6 @@ import { DATA_PROCESSING_STATUS_TO_CLASS } from './data-processing.constants';
 export default class {
   /* @ngInject */
   constructor($state, CucCloudMessage, dataProcessingService, CucRegionService) {
-    console.log('CONTROLLER');
     this.$state = $state;
     this.cucCloudMessage = CucCloudMessage;
     this.dataProcessingService = dataProcessingService;
@@ -22,5 +21,4 @@ export default class {
     }
     return 'error';
   }
-
 }
