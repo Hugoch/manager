@@ -10,6 +10,6 @@ export default class {
 
   closeModal() {
     console.log(this.jobId,this.jobName)
-    this.$state.go('pci.projects.project.data-processing.job-details', { projectId: this.projectId });
+    this.$state.go('pci.projects.project.data-processing.job-details.dashboard', { projectId: this.projectId });
   }
 }

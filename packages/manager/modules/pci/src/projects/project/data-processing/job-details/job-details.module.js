@@ -4,16 +4,16 @@ import '@uirouter/angularjs';
 import routing from './job-details.routing';
 
 import dataProcessingJobDetailsComponent from './job-details.component';
-import jobStatus from '../job-status';
-import terminateJob from './terminate-job';
+import jobDashboard from './job-dashboard';
+import jobLogs from './job-logs';
 
 const moduleName = 'ovhManagerDataProcessingSubmitJobComponent';
 
 angular
   .module(moduleName, [
     'ui.router',
-    jobStatus,
-    terminateJob,
+    jobDashboard,
+    jobLogs,
   ])
   .config(routing)
   .component('dataProcessingJobDetailsComponent', dataProcessingJobDetailsComponent)

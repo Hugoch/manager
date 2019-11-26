@@ -1,0 +1,17 @@
+<div data-ui-view>
+    <div class="logger col-md-12"
+         data-scroll-glue>
+        <div data-ng-if="!$ctrl.logger.logs.swiftUrl">
+            <div class="logger__entry"
+                 ng-repeat="entry in $ctrl.logger.logs track by entry.timestamp">
+                <span class="logger__entry-message">{{ entry.timestamp.padEnd(30,' ') }} {{ entry.content }}</span>
+            </div>
+            <i class="logger__cursor">_</i>
+        </div>
+        <div class="col-md-12 logger_placeholder"
+             data-ng-if="$ctrl.logger.logs.swiftUrl">
+            {{ ::'data_processing_details_logs_swift' | translate:{swiftUrl:$ctrl.logger.logs.swiftUrl} }}
+            <a href="{{ $ctrl.logger.logs.swiftUrl }}">{{ $ctrl.logger.logs.swiftUrl }}</a>
+        </div>
+    </div>
+</div>

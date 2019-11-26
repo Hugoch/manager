@@ -1,7 +1,6 @@
-export default /* @ngInject */$stateProvider => $stateProvider.state('pci.projects.project.data-processing.job-details', {
-  url: '/:jobId',
-  component: 'dataProcessingJobDetailsComponent',
-  redirectTo: 'pci.projects.project.data-processing.job-details.dashboard',
+export default /* @ngInject */$stateProvider => $stateProvider.state('pci.projects.project.data-processing.job-details.dashboard', {
+  url: '/dashboard',
+  component: 'dataProcessingJobDetailsDashboardComponent',
   resolve: {
     // retrieve project id from url params
     projectId: $transition$ => $transition$.params().projectId,
@@ -11,6 +10,6 @@ export default /* @ngInject */$stateProvider => $stateProvider.state('pci.projec
       dataProcessingService,
       jobId,
     ) => dataProcessingService.getJob(jobId),
-    breadcrumb: job => job.name, // update breadcrumb with job id
+    breadcrumb: $translate => $translate.instant('data_processing_details_dashboard_label'), // update breadcrumb with "Dashboard"
   },
 });

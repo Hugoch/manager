@@ -54,4 +54,8 @@ export default class {
     this.jobSizingValidate = !this.jobSizingValidate;
     setTimeout(() => console.log(this.state), 0);
   }
+
+  onSubmitJobConfigHandler() {
+    // TODO implement
+  }
 }

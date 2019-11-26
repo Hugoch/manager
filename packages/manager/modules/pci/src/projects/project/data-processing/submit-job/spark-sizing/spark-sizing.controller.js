@@ -58,8 +58,8 @@ export default class {
    * Use sizing template to update all the individual cores/memory fields of current state
    */
   updateStateFromTemplate() {
-    const driverTpl = this.driverTemplates[this.state.driverTemplate];
-    const workerTpl = this.workerTemplates[this.state.workerTemplate];
+    const driverTpl = this.driverTemplates[parseInt(this.state.driverTemplate, 10) - 1];
+    const workerTpl = this.workerTemplates[parseInt(this.state.workerTemplate, 10) - 1];
     // compute driver overhead in Mb while ensuring Spark's minimum
     const driverMemoryOverheadMb = Math.max(driverTpl.memory / 1e6 * MEMORY_OVERHEAD_RATIO,
       MIN_MEMORY_OVERHEAD_MB);

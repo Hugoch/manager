@@ -1,7 +1,9 @@
+import { sortBy, uniqBy } from 'lodash';
+
 export default class DataProcessingService {
   /* @ngInject */
   constructor() {
-
+    this.logs = [];
   }
 
   /**
@@ -13,7 +15,7 @@ export default class DataProcessingService {
     return new Promise((resolve) => {
       resolve([{
         id: '99b7e763-7af7-4047-b97f-a51a210f5aa5',
-        name: 'test',
+        name: 'flamboyant-steve-1107',
         region: 'GRA',
         type: 'Spark',
         vcores: 10,
@@ -28,7 +30,7 @@ export default class DataProcessingService {
     return new Promise((resolve) => {
       resolve({
         id: '99b7e763-7af7-4047-b97f-a51a210f5aa5',
-        name: 'test',
+        name: 'flamboyant-steve-1107',
         region: 'GRA',
         type: 'Spark',
         vcores: 10,
@@ -54,4 +56,5 @@ export default class DataProcessingService {
       });
     });
   }
+
 }

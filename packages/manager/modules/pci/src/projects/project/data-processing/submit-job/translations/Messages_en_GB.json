@@ -1,12 +1,1 @@
-{
-  "data_processing_submit_job_title": "Submit a job",
-  "data_processing_submit_job_description": "OVH Analytics Data Compute lets you run Spark job on-demand with a customizable amount of vCPU cores and RAM.<br />Upload your code as JAR or Python files to a Swift Container, and run it using the interface below.<br />During your job execution you will get access to live logs and metrics.",
-  "data_processing_submit_job_stepper_region_title": "Select a region",
-  "data_processing_submit_job_stepper_job_type_title": "Select job type",
-  "data_processing_submit_job_stepper_sizing_title": "Define compute and memory",
-  "data_processing_submit_job_stepper_configure_title": "Configure your job",
-  "data_processing_submit_job_spark_description": "Submit a JAR package containing all the classes and dependencies needed by your job.",
-  "data_processing_submit_job_pyspark_description": "Submit a Python working directory with a Conda requirements file.",
-  "data_processing_submit_job_sizing_description": "Your Spark job is ran by a driver node which distributes tasks to workers.<br />Define cores and memory allocated to your nodes and the number of workers you want to run in parallel",
-  "data_processing_submit_job_button_label": "Submit job"
-}
+{}

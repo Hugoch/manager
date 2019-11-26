@@ -39,7 +39,9 @@
                 <!-- step 4 - configure job -->
                 <oui-step-form
                     data-header="{{ ::'data_processing_submit_job_stepper_configure_title' | translate }}"
-                    data-submit-text="{{ ::'data_processing_submit_job_button_label' | translate }}">
+                    data-submit-text="{{ ::'data_processing_submit_job_button_label' | translate }}"
+                    data-valid="false"
+                    data-on-submit="$ctrl.onSubmitJobConfigHandler()">
                     <dataprocessing-submit-job-spark-config>
                     </dataprocessing-submit-job-spark-config>
                 </oui-step-form>

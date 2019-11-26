@@ -10,7 +10,7 @@ angular
     'oc.lazyLoad',
   ])
   .config(/* @ngInject */($stateProvider) => {
-    $stateProvider.state('pci.projects.project.data-processing.job-details.terminate.**', {
+    $stateProvider.state('pci.projects.project.data-processing.job-details.dashboard.terminate.**', {
       url: '/terminate',
       lazyLoad: ($transition$) => {
         const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');

@@ -1,6 +1,6 @@
 export default /* @ngInject */ ($stateProvider) => {
   $stateProvider
-    .state('pci.projects.project.data-processing.job-details.terminate', {
+    .state('pci.projects.project.data-processing.job-details.dashboard.terminate', {
       url: '/terminate',
       views: {
         modal: {
