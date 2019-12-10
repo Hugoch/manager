@@ -1,6 +1,5 @@
-export default /* @ngInject */($stateProvider) => {
-  console.log('ROUTING');
-  return $stateProvider.state('pci.projects.project.data-processing', {
+export default /* @ngInject */$stateProvider => $stateProvider.state(
+  'pci.projects.project.data-processing', {
     cache: false,
     url: '/data-processing',
     component: 'dataProcessingComponent',
@@ -10,11 +9,14 @@ export default /* @ngInject */($stateProvider) => {
     //   .then(() => false),
     resolve: {
       breadcrumb: /* @ngInject */ $translate => $translate.instant('data_processing_title'),
-      jobs: /* @ngInject */ (dataProcessingService, projectId) => {
-        return dataProcessingService.getJobs(projectId);
-      },
+      jobs: /* @ngInject */ (dataProcessingService,
+        projectId) => dataProcessingService.getJobs(projectId),
       submitJob: /* @ngInject */ ($state, projectId) => () => $state.go('pci.projects.project.data-processing.submit-job', { projectId }),
-      showJob: /* @ngInject */ ($state, projectId) => jobId => $state.go('pci.projects.project.data-processing.job-details.dashboard', { projectId, jobId }),
+      showJob: /* @ngInject */ ($state, projectId) => jobId => $state.go('pci.projects.project.data-processing.job-details.dashboard', {
+        projectId,
+        jobId,
+      }),
+      lab: /* @ngInject */(PciProjectLabsService, projectId) => PciProjectLabsService.getLabByName(projectId, 'ioStream'), // FIXME REPLACE WITH DATAPROCESSING
     },
-  });
-};
+  },
+);

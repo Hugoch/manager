@@ -8,6 +8,8 @@ import dataProcessingService from './data-processing.service';
 import submitJob from './submit-job';
 import jobDetails from './job-details';
 import jobStatus from './job-status';
+import onboarding from './onboarding';
+import labs from '../../../components/project/labs';
 import { convertMemory, formatDuration } from './data-processing.utils';
 
 const moduleName = 'ovhManagerDataProcessingComponent';
@@ -18,6 +20,8 @@ angular
     submitJob,
     jobDetails,
     jobStatus,
+    onboarding,
+    labs,
   ])
   .config(routing)
   .component('dataProcessingComponent', dataProcessingComponent)
