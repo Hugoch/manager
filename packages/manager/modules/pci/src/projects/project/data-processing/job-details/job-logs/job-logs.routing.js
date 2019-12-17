@@ -8,8 +8,9 @@ export default /* @ngInject */$stateProvider => $stateProvider.state('pci.projec
     jobId: $transition$ => $transition$.params().jobId,
     job: ( // retrieve job from service
       dataProcessingService,
+      projectId,
       jobId,
-    ) => dataProcessingService.getJob(jobId),
+    ) => dataProcessingService.getJob(projectId, jobId),
     breadcrumb: $translate => $translate.instant('data_processing_details_logs_title'), // update breadcrumb with "/ Logs"
   },
 });

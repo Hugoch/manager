@@ -9,8 +9,9 @@ export default /* @ngInject */$stateProvider => $stateProvider.state('pci.projec
     jobId: $transition$ => $transition$.params().jobId,
     job: ( // retrieve job from service
       dataProcessingService,
+      projectId,
       jobId,
-    ) => dataProcessingService.getJob(jobId),
+    ) => dataProcessingService.getJob(projectId, jobId),
     breadcrumb: job => job.name, // update breadcrumb with job id
   },
 });

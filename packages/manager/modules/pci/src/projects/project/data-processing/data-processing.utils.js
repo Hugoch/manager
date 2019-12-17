@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { mapValues, keyBy, startCase } from 'lodash';
 
 const memoryConversions = {
   k: 1000,
@@ -50,8 +51,26 @@ export const convertMemory = (value, unit) => {
   return (bytes / memoryConversions[unit]).toFixed(2) + unit;
 };
 
+
+export const summarizeSparkJob = (job) => {
+  const engineParameters = mapValues(keyBy(job.engineParameters, 'name'), 'value');
+  const sparkJob = {
+    ...job,
+    vcores: (parseFloat(engineParameters.driver_cores)
+      + parseFloat(engineParameters.executor_cores)
+      * parseFloat(engineParameters.executor_num)),
+    ram: convertMemory((parseMemory(engineParameters.driver_memory)
+      + parseMemory(engineParameters.executor_memory)
+      * parseFloat(engineParameters.executor_num)).toString(),'Gi'),
+    type: 'Spark',
+    status: startCase(job.status.toLowerCase()),
+  };
+  return sparkJob;
+};
+
 export default {
   parseMemory,
   formatDuration,
   convertMemory,
+  summarizeSparkJob,
 };

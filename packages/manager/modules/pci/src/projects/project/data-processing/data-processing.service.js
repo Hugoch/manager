@@ -1,9 +1,13 @@
 import { sortBy, uniqBy } from 'lodash';
+import { summarizeSparkJob } from './data-processing.utils';
 
 export default class DataProcessingService {
   /* @ngInject */
-  constructor() {
+  constructor($q, OvhApiCloudProjectDataProcessing) {
     this.logs = [];
+    this.$q = $q;
+    this.OvhApiCloudProjectDataProcessingJobs = OvhApiCloudProjectDataProcessing.Jobs()
+      .v6();
   }
 
   /**
@@ -12,21 +16,31 @@ export default class DataProcessingService {
    * @return {Promise<any>}
    */
   getJobs(projectId) {
-    return new Promise((resolve) => {
-      resolve([{
-        id: '99b7e763-7af7-4047-b97f-a51a210f5aa5',
-        name: 'flamboyant-steve-1107',
-        region: 'GRA',
-        type: 'Spark',
-        vcores: 10,
-        ram: 256,
-        creation_date: 1574677770,
-        status: 'Running',
-      }]);
-    });
+    return this.OvhApiCloudProjectDataProcessingJobs
+      .query({ serviceName: projectId })
+      .$promise
+      .then((jobIds) => {
+        const promises = jobIds.map(id => this.getJob(projectId, id));
+        return this.$q.all(promises)
+          .then((jobs) => jobs);
+      });
   }
 
-  getJob(jobId) {
+  getJob(projectId, jobId) {
+    return this.OvhApiCloudProjectDataProcessingJobs
+      .get({
+        serviceName: projectId,
+        jobId,
+      })
+      .$promise
+      .then((job) => {
+        switch (job.engine) {
+          case 'spark':
+            return summarizeSparkJob(job);
+          default:
+            return job;
+        }
+      });
     return new Promise((resolve) => {
       resolve({
         id: '99b7e763-7af7-4047-b97f-a51a210f5aa5',
@@ -56,5 +70,4 @@ export default class DataProcessingService {
       });
     });
   }
-
 }

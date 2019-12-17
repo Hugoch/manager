@@ -40,12 +40,12 @@
             <oui-column data-title="::'data_processing_job_cores_ram' | translate"
                         data-property="vcores"
                         data-sortable>
-                <span>{{ $row.vcores }}c/{{ $row.ram }}G</span>
+                <span>{{ $row.vcores }}c/{{ $row.ram }}</span>
             </oui-column>
             <oui-column data-title="::'data_processing_job_creation_date' | translate"
-                        data-property="creation_date"
+                        data-property="creationDate"
                         data-sortable>
-                <span title="{{ ::$row.creation_date * 1000. | momentFormat:'MMMM Do YYYY, h:mm:ss a'}}" data-ng-bind="::$row.creation_date * 1000. | momentRelative"></span>
+                <span title="{{ ::$row.creationDate | momentFormat:'MMMM Do YYYY, h:mm:ss a'}}" data-ng-bind="::$row.creationDate | momentRelative"></span>
             </oui-column>
             <oui-column data-title="::'data_processing_job_status' | translate"
                         data-property="status"

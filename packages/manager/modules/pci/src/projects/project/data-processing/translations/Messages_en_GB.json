@@ -8,6 +8,7 @@
   "data_processing_job_ram": "RAM",
   "data_processing_job_creation_date": "Created",
   "data_processing_job_status": "Status",
+  "data_processing_job_status_pending": "Pending",
   "data_processing_job_status_submitted": "Submitted",
   "data_processing_job_status_running": "Running",
   "data_processing_job_status_failed": "Failed",
