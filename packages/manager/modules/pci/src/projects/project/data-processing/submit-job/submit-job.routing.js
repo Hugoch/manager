@@ -3,5 +3,7 @@ export default /* @ngInject */$stateProvider => $stateProvider.state('pci.projec
   component: 'dataProcessingSubmitJobComponent',
   resolve: {
     breadcrumb: /* @ngInject */ $translate => $translate.instant('data_processing_submit_job_title'),
+    capabilities: /* @ngInject */ (dataProcessingService,
+      projectId) => dataProcessingService.getCapabilities(projectId),
   },
 });

@@ -5,7 +5,9 @@
         data-match="description"
         data-on-change="$ctrl.onChange(modelValue)"
         data-model="$ctrl.jobType"
-        data-values="[item]"
-        data-label="{{ item.name }}">
+        data-values="item.versions"
+        data-label="{{ item.name }}"
+        data-description="{{ 'data_processing_submit_job_' + item.name.toLowerCase() + '_description' | translate }}"
+    >
     </oui-select-picker>
 </div>

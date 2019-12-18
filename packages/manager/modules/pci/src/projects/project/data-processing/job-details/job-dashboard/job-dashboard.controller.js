@@ -1,5 +1,5 @@
 import {
-  DATA_PROCESSING_STATUS_TO_CLASS,
+  DATA_PROCESSING_STATUS_TO_CLASS, DATA_PROCESSING_STATUSES,
   DATA_PROCESSING_UI_URL,
 } from '../../data-processing.constants';
 
@@ -32,4 +32,10 @@ export default class {
   browseObjectStorage() {
     this.$state.go('pci.projects.project.storages.objects', { projectId: this.projectId });
   }
+
+  isJobRunning() {
+    return this.job.status in [DATA_PROCESSING_STATUSES.PENDING,
+      DATA_PROCESSING_STATUSES.RUNNING, DATA_PROCESSING_STATUSES.SUBMITTED];
+  }
+
 }

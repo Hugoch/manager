@@ -1,26 +1,37 @@
+import { startCase } from 'lodash';
+
 export default class {
   /* @ngInject */
   constructor($translate) {
     this.$translate = $translate;
-    // define available compute engines. TODO this should be in /capabilities
-    this.availableEngines = [
-      {
-        id: 'spark',
-        name: 'Spark',
-        description: $translate.instant('data_processing_submit_job_spark_description'),
-      },
-      {
-        id: 'pyspark',
-        name: 'PySpark',
-        description: $translate.instant('data_processing_submit_job_pyspark_description'),
-      },
-    ];
+    // define available compute engines
+    this.availableEngines = [];
+  }
+
+  $onChanges() {
+    if (this.jobEngines !== undefined) {
+      this.availableEngines = Object.values(this.jobEngines)
+        .map(engine => ({
+          name: startCase(engine.name),
+          description: this.$translate.instant(`data_processing_submit_job_${engine.name}_description`),
+          versions: engine.availableVersions.map(v => ({
+            id: `${engine.name}@${v.name}`,
+            engine: engine.name,
+            version: v.name,
+            description: v.description,
+          })),
+        }));
+    }
+    console.log(this.availableEngines);
   }
 
   /**
    * Handle change events
    */
-  onChange({ id }) {
-    this.onChangeHandler(id);
+  onChange({ engine, version }) {
+    this.onChangeHandler({
+      engine,
+      version,
+    });
   }
 }

@@ -4,5 +4,8 @@ import template from './submit-job.html';
 export default {
   template,
   controller,
-  bindings: {},
+  bindings: {
+    projectId: '<',
+    capabilities: '<',
+  },
 };

@@ -11,23 +11,6 @@
                maxlength="32">
     </oui-field>
     <oui-field
-        data-label="{{:: 'data_processing_submit_job_stepper_spark_version_label' | translate }}"
-        data-size="l">
-        <label class="oui-select">
-            <select name="spark-version"
-                    class="oui-select__input"
-                    data-ng-model="$ctrl.state.sparkVersion"
-                    required>
-                <option
-                    ng-repeat="version in $ctrl.sparkVersions"
-                    value="{{ version.name }}">
-                    {{ version.name }}
-                </option>
-            </select>
-            <span class="oui-icon oui-icon-chevron-down" aria-hidden="true"></span>
-        </label>
-    </oui-field>
-    <oui-field
         data-label="{{:: 'data_processing_submit_job_stepper_spark_swift_label' | translate }}"
         data-size="l">
         <label class="oui-select">

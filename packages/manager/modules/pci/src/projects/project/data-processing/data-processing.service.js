@@ -1,5 +1,5 @@
-import { sortBy, uniqBy } from 'lodash';
-import { summarizeSparkJob } from './data-processing.utils';
+import { summarizeJob } from './data-processing.utils';
+import { keyBy } from 'lodash';
 
 export default class DataProcessingService {
   /* @ngInject */
@@ -7,67 +7,55 @@ export default class DataProcessingService {
     this.logs = [];
     this.$q = $q;
     this.OvhApiCloudProjectDataProcessingJobs = OvhApiCloudProjectDataProcessing.Jobs()
-      .v6();
+      .iceberg();
+    this.OvhApiCloudProjectDataProcessingCapabilities = OvhApiCloudProjectDataProcessing
+      .Capabilities()
+      .iceberg();
   }
 
   /**
    * Retrieve list of jobs
-   * @param projectId list jobs related to this project id
+   * @param projectId List jobs related to this project id
    * @return {Promise<any>}
    */
   getJobs(projectId) {
+    // TODO implement filters
     return this.OvhApiCloudProjectDataProcessingJobs
-      .query({ serviceName: projectId })
+      .query()
+      .expand('CachedObjectList-Pages')
+      .limit(100)
+      .execute({ serviceName: projectId })
       .$promise
-      .then((jobIds) => {
-        const promises = jobIds.map(id => this.getJob(projectId, id));
-        return this.$q.all(promises)
-          .then((jobs) => jobs);
-      });
+      .then(jobs => jobs.data.map(job => summarizeJob(job)));
   }
 
+  /**
+   * Retrieve a single job
+   * @param projectId Project id containing the job
+   * @param jobId Job id
+   * @return {Promise<any>}
+   */
   getJob(projectId, jobId) {
     return this.OvhApiCloudProjectDataProcessingJobs
-      .get({
+      .get()
+      .execute({
         serviceName: projectId,
         jobId,
       })
       .$promise
-      .then((job) => {
-        switch (job.engine) {
-          case 'spark':
-            return summarizeSparkJob(job);
-          default:
-            return job;
-        }
-      });
-    return new Promise((resolve) => {
-      resolve({
-        id: '99b7e763-7af7-4047-b97f-a51a210f5aa5',
-        name: 'flamboyant-steve-1107',
-        region: 'GRA',
-        type: 'Spark',
-        vcores: 10,
-        ram: 256,
-        creation_date: 1574671577,
-        status: 'Running',
-        end_date: 1574678877,
-        start_date: 1574671677,
-        container_name: 'my-code',
-        engine_parameters: {
-          driver_cores: 10,
-          driver_memory: '2Gi',
-          executor_cores: 8,
-          executor_memory: '3Gi',
-          executor_num: 4,
-          job_type: 'spark',
-          executor_memory_overhead: '512Mi',
-          driver_memory_overhead: '384Mi',
-          jar_file: 'spark-examples.jar',
-          main_class: 'com.apache.spark.examples.SparkPi',
-          arguments: ['1000'],
-        },
-      });
-    });
+      .then(job => summarizeJob(job.data));
+  }
+
+  /**
+   * Retrieve capabilities
+   * @param projectId Project to get capabilities from
+   * @return {Promise<any>}
+   */
+  getCapabilities(projectId) {
+    return this.OvhApiCloudProjectDataProcessingCapabilities
+      .query()
+      .execute({ serviceName: projectId })
+      .$promise
+      .then(capabilities => keyBy(capabilities.data, e => e.name));
   }
 }

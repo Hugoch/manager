@@ -1,6 +1,7 @@
 import {
   DATA_PROCESSING_STATUS_TO_CLASS,
-  DATA_PROCESSING_UI_URL
+  DATA_PROCESSING_UI_URL,
+  DATA_PROCESSING_STATUSES,
 } from '../data-processing.constants';
 
 export default class {

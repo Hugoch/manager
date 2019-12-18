@@ -41,7 +41,7 @@ export const parseMemory = (value) => {
 };
 
 /**
- * Converts Kubernetes-style memory from one unit to another
+ * Convert Kubernetes-style memory from one unit to another
  * @param value Kubernetes-style memory string
  * @param unit Kubernetes-style unit to convert to
  * @return {string} Kubernetes-style converted value
@@ -52,8 +52,15 @@ export const convertMemory = (value, unit) => {
 };
 
 
+/**
+ * Build a UI friendly job object from API response
+ * @param job A job object from APIv6
+ * @return {{duration: number, engineParameters: {},
+ *  type: string, vcores: number, ram: string, status: string}}
+ */
 export const summarizeSparkJob = (job) => {
   const engineParameters = mapValues(keyBy(job.engineParameters, 'name'), 'value');
+  engineParameters.arguments = engineParameters.conf.split(','); // FIXME with apiv6 PR
   const sparkJob = {
     ...job,
     vcores: (parseFloat(engineParameters.driver_cores)
@@ -61,11 +68,22 @@ export const summarizeSparkJob = (job) => {
       * parseFloat(engineParameters.executor_num)),
     ram: convertMemory((parseMemory(engineParameters.driver_memory)
       + parseMemory(engineParameters.executor_memory)
-      * parseFloat(engineParameters.executor_num)).toString(),'Gi'),
+      * parseFloat(engineParameters.executor_num)).toString(), 'Gi'),
     type: 'Spark',
     status: startCase(job.status.toLowerCase()),
+    duration: (moment(job.endDate) - moment(job.creationDate)).valueOf(),
+    engineParameters,
   };
   return sparkJob;
+};
+
+export const summarizeJob = (job) => {
+  switch (job.engine) {
+    case 'spark':
+      return summarizeSparkJob(job);
+    default:
+      return job;
+  }
 };
 
 export default {

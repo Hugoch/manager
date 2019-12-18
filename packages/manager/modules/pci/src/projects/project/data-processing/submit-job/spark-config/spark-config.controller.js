@@ -5,21 +5,14 @@ export default class {
   constructor() {
     // create state
     this.state = {};
-    this.sparkVersions = {};
     this.swiftContainers = {};
     this.currentArgument = '';
   }
 
   $onInit() {
-    // FIXME get from API
-    this.sparkVersions = [{
-      id: 1,
-      name: 'spark-2.4.3-mllib',
-    }];
     this.swiftContainers = ['my-code-container', 'another-container'];
     // initialize component state
     this.state = {
-      sparkVersion: this.sparkVersions[0].name,
       arguments: [],
     }
     ;

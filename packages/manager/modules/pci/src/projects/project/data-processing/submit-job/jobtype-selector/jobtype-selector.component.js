@@ -7,5 +7,6 @@ export default {
   controller,
   bindings: {
     onChangeHandler: '<',
+    jobEngines: '<',
   },
 };

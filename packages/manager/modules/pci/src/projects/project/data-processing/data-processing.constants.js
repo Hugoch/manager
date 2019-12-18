@@ -7,10 +7,22 @@ export const DATA_PROCESSING_STATUS_TO_CLASS = Object.freeze({
   TERMINATED: 'error',
 });
 
+export const DATA_PROCESSING_STATUSES = Object.freeze({
+  PENDING: 'Pending',
+  SUBMITTED: 'Submitted',
+  RUNNING: 'Running',
+  FAILED: 'Failed',
+  COMPLETED: 'Completed',
+  TERMINATED: 'Terminated',
+});
+
 export const DATA_PROCESSING_UI_URL = {
-  GRA: 'https://adc.gra.dataconvergence.ovh.com/',
+  GRA: 'https://adc.gra.dataconvergence.ovh.com',
+  GRA5: 'https://adc.gra.dataconvergence.ovh.com',
 };
 
 export default {
   DATA_PROCESSING_STATUS_TO_CLASS,
+  DATA_PROCESSING_STATUSES,
+  DATA_PROCESSING_UI_URL,
 };

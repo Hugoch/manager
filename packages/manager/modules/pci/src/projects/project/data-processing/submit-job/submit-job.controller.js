@@ -1,3 +1,5 @@
+import { find } from 'lodash';
+
 export default class {
   /* @ngInject */
   constructor($state, CucCloudMessage, dataProcessingService, CucRegionService) {
@@ -23,12 +25,12 @@ export default class {
    * Fetch available regions from capabilities and update binding
    */
   updateAvailableRegions() {
-    this.regions = [
-      {
-        name: 'GRA',
-        hasEnoughQuota: () => true,
-      },
-    ];
+    const engine = find(this.capabilities, e => e.name === this.state.jobType.engine);
+    const version = find(engine.availableVersions, v => v.name === this.state.jobType.version);
+    this.regions = version.availableRegions.map(region => ({
+      name: region,
+      hasEnoughQuota: () => true,
+    }));
   }
 
   /**
