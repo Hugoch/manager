@@ -1,21 +1,66 @@
+import { filter, find } from 'lodash';
 import { ARGUMENTS_VALIDATION_PATTERN } from './spark-config.constants';
+import { nameGenerator } from '../../data-processing.utils';
 
 export default class {
   /* @ngInject */
-  constructor() {
+  constructor($scope, SparkConfigService) {
+    this.$scope = $scope;
     // create state
     this.state = {};
     this.swiftContainers = {};
+    this.swiftContainersInRegion = {};
     this.currentArgument = '';
+    this.sparkConfigService = SparkConfigService;
+    this.containerObjects = [];
   }
 
   $onInit() {
-    this.swiftContainers = ['my-code-container', 'another-container'];
+    this.swiftContainers = [];
     // initialize component state
     this.state = {
       arguments: [],
+      jobName: nameGenerator(),
+      jarFileNotFound: false, // used by UI to show a warning when file is not found
+      jarFileInvalid: false, // used by UI to show a warning when file is not found
+    };
+    this.sparkConfigService.listContainers(this.projectId)
+      .then((containers) => {
+        this.swiftContainers = containers;
+      });
+  }
+
+  $onChanges() {
+    if (this.region !== null) {
+      this.swiftContainersInRegion = filter(this.swiftContainers,
+        c => c.region === this.region.substr(0, 3))
+        .map(container => container.name);
     }
-    ;
+  }
+
+  /**
+   * Handler to manage user container selection.
+   * Object list is retrieved from API for selected container.
+   */
+  onContainerChangeHandler() {
+    const containerId = find(this.swiftContainers, c => (
+      c.name === this.state.swiftContainer && c.region === this.region.substr(0, 3)))
+      .id;
+    this.sparkConfigService
+      .listObjects(this.projectId, containerId)
+      .then((container) => {
+        this.containerObjects = container.objects;
+        // handle case where customer started by JAR name before selecting container
+        this.onJarChangeHandler();
+      });
+    this.onChangeHandler(this.state);
+  }
+
+  onJarChangeHandler() {
+    const obj = find(this.containerObjects, o => o.name === this.state.jarFile);
+    this.state.jarFileInvalid = (obj !== undefined && obj.contentType !== 'application/java-archive');
+    this.state.jarFileNotFound = (obj === undefined);
+    this.onChangeHandler(this.state);
   }
 
   /**
@@ -24,6 +69,7 @@ export default class {
    */
   onSubmitArgumentHandler(evt) {
     evt.preventDefault();
+    evt.stopPropagation();
     const arg = evt.target.value;
     // validate argument against authorized pattern
     if (arg.match(ARGUMENTS_VALIDATION_PATTERN)) {
@@ -32,5 +78,13 @@ export default class {
       });
       this.currentArgument = '';
     }
+    this.onChangeHandler(this.state);
+  }
+
+  /**
+   * Handler to manage Main Class field changes
+   */
+  onMainClassChangeHandler() {
+    this.onChangeHandler(this.state);
   }
 }

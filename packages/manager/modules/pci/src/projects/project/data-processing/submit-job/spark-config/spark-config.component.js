@@ -8,5 +8,8 @@ export default {
   bindings: {
     values: '<',
     validate: '<',
+    projectId: '<',
+    region: '<',
+    onChangeHandler: '<',
   },
 };

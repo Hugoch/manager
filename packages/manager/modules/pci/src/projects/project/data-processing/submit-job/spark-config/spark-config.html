@@ -16,12 +16,13 @@
         <label class="oui-select">
             <select name="swift-container" class="oui-select__input"
                     data-ng-model="$ctrl.state.swiftContainer"
+                    data-ng-change="$ctrl.onContainerChangeHandler()"
                     required>
                 <option ng-value="undefined">{{:: 'data_processing_submit_job_stepper_spark_swift_placeholder' |
                     translate }}
                 </option>
                 <option
-                    ng-repeat="container in $ctrl.swiftContainers"
+                    ng-repeat="container in $ctrl.swiftContainersInRegion"
                     value="{{ container }}">
                     {{ container }}
                 </option>
@@ -36,9 +37,26 @@
                id="jar-file"
                name="jar-file"
                data-ng-model="$ctrl.state.jarFile"
+               data-ng-change="$ctrl.onJarChangeHandler()"
                required
-               minlength="3"
-               maxlength="32">
+               minlength="1"
+               maxlength="256">
+        <div class="oui-field__warning-show" data-ng-if="$ctrl.state.jarFileNotFound">
+            <span ng-messages="jarFileNotFound" role="alert">
+                <span class="oui-icon oui-icon-warning_circle" aria-hidden="true"></span>
+                <span>
+                    {{ ::'data_processing_submit_job_stepper_spark_not_found_file_label' | translate }}
+                </span>
+            </span>
+        </div>
+        <div class="oui-field__warning-show" data-ng-if="$ctrl.state.jarFileInvalid">
+            <span ng-messages="jarFileInvalid" role="alert">
+                <span class="oui-icon oui-icon-warning_circle" aria-hidden="true"></span>
+                <span>
+                    {{ ::'data_processing_submit_job_stepper_spark_invalid_jar_label' | translate }}
+                </span>
+            </span>
+        </div>
     </oui-field>
     <oui-field data-label="{{:: 'data_processing_submit_job_stepper_spark_main_class_label' | translate }}"
                data-help-text="{{:: 'data_processing_submit_job_stepper_spark_main_class_help' | translate }}"
@@ -48,28 +66,29 @@
                id="main-class"
                name="main-class"
                data-ng-model="$ctrl.state.mainClass"
+               data-ng-change="$ctrl.onMainClassChangeHandler()"
                required
                minlength="3"
                maxlength="32">
     </oui-field>
-</form>
-<span>
+    <span>
      {{:: 'data_processing_submit_job_stepper_spark_arguments_label' | translate }}
 </span>
-<oui-chips class="sparkconfig__arguments"
-           data-items="$ctrl.state.arguments"
-           data-on-remove="$ctrl.state.arguments=items"
-           data-stacked
-           data-closable>
-</oui-chips>
-<oui-field size="xl">
-    <input class="oui-input"
-           type="text"
-           id="argument"
-           name="argument"
-           data-ng-model="$ctrl.currentArgument"
-           data-ng-keyup="$event.keyCode == 13 && $ctrl.onSubmitArgumentHandler($event)"
-           placeholder="{{:: 'data_processing_submit_job_stepper_spark_arguments_placeholder' | translate }}"
-           minlength="1"
-           maxlength="32">
-</oui-field>
+    <oui-chips class="sparkconfig__arguments"
+               data-items="$ctrl.state.arguments"
+               data-on-remove="$ctrl.state.arguments=items"
+               data-stacked
+               data-closable>
+    </oui-chips>
+    <oui-field size="xl">
+        <input class="oui-input"
+               type="text"
+               id="argument"
+               name="argument"
+               data-ng-model="$ctrl.currentArgument"
+               data-ng-keyup="$event.keyCode == 13 && $ctrl.onSubmitArgumentHandler($event)"
+               placeholder="{{:: 'data_processing_submit_job_stepper_spark_arguments_placeholder' | translate }}"
+               minlength="1"
+               maxlength="32">
+    </oui-field>
+</form>

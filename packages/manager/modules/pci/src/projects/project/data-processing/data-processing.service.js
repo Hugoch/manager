@@ -1,5 +1,5 @@
-import { summarizeJob } from './data-processing.utils';
 import { keyBy } from 'lodash';
+import { summarizeJob } from './data-processing.utils';
 
 export default class DataProcessingService {
   /* @ngInject */
