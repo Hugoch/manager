@@ -44,20 +44,21 @@
                 {{ ::'data_processing_details_actions_show_grafana_label' | translate }}
             </oui-tile-button>
             <!-- Tile item :: Browse Swift -->
-            <oui-tile-button title="{{ ::'data_processing_details_actions_browse_swift_label' | translate }}"
+            <oui-tile-button title="{{ $ctrl.containerId === null? 'data_processing_details_actions_browse_swift_unavailable_label': 'data_processing_details_actions_browse_swift_label' | translate }}"
+                             disabled="$ctrl.containerId === null"
                              data-on-click="$ctrl.browseObjectStorage()">
                 {{ ::'data_processing_details_actions_browse_swift_label' | translate }}
             </oui-tile-button>
             <!-- Tile item :: Relaunch -->
-            <oui-tile-button title="{{ ::'data_processing_details_actions_relaunch_label' | translate }}"
-                             href="#">
-                {{ ::'data_processing_details_actions_relaunch_label' | translate }}
-            </oui-tile-button>
+<!--            <oui-tile-button title="{{ ::'data_processing_details_actions_relaunch_label' | translate }}"-->
+<!--                             href="#">-->
+<!--                {{ ::'data_processing_details_actions_relaunch_label' | translate }}-->
+<!--            </oui-tile-button>-->
             <!-- Tile item :: Save template -->
-            <oui-tile-button title="{{ ::'data_processing_details_actions_save_template_label' | translate }}"
-                             href="#">
-                {{ ::'data_processing_details_actions_save_template_label' | translate }}
-            </oui-tile-button>
+<!--            <oui-tile-button title="{{ ::'data_processing_details_actions_save_template_label' | translate }}"-->
+<!--                             href="#">-->
+<!--                {{ ::'data_processing_details_actions_save_template_label' | translate }}-->
+<!--            </oui-tile-button>-->
             <!-- Tile item :: Show billing -->
             <oui-tile-button title="{{ ::'data_processing_details_actions_show_billing_label' | translate }}"
                              data-on-click="$ctrl.showBillingConsole()">

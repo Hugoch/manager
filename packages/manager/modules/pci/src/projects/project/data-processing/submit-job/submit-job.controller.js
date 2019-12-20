@@ -45,7 +45,6 @@ export default class {
    */
   onChangeRegionHandler({ name }) {
     this.state.region = name;
-    console.log(this.state);
   }
 
   /**
@@ -54,7 +53,6 @@ export default class {
    */
   onChangeJobTypeHandler(jobType) {
     this.state.jobEngine = jobType;
-    console.log(this.state);
   }
 
   onSubmitJobSizingHandler() {
@@ -71,8 +69,6 @@ export default class {
   }
 
   onSubmitJobHandler() {
-    // TODO implement
-    console.log(this.state.jobConfig);
     this.isSubmitting = true;
     const payload = {
       containerName: this.state.jobConfig.swiftContainer,
@@ -123,15 +119,15 @@ export default class {
       });
     }
     this.dataProcessingService.submitJob(this.projectId, payload)
-      .catch(() => {
+      .then(() => {
+        this.$state.go('pci.projects.project.data-processing', { projectId: this.projectId });
+      }, () => {
         if (this.submitRetries < 2) {
           this.submitRetries += 1;
           this.onSubmitJobHandler();
         } else {
-          console.log('FAIL');
           this.isSubmitting = false;
         }
       });
-    console.log(payload);
   }
 }

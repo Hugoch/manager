@@ -71,4 +71,26 @@ export default class DataProcessingService {
       .execute({ serviceName: projectId, ...job })
       .$promise;
   }
+
+  terminateJob(projectId, jobId) {
+    return this.OvhApiCloudProjectDataProcessingJobs
+      .delete()
+      .execute({
+        serviceName: projectId,
+        jobId,
+      })
+      .$promise;
+  }
+
+  getLogs(projectId, jobId, from) {
+    return this.OvhApiCloudProjectDataProcessingJobs
+      .logs()
+      .execute({
+        serviceName: projectId,
+        from,
+        jobId,
+      })
+      .$promise
+      .then(res => res.data);
+  }
 }

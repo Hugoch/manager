@@ -12,7 +12,7 @@
         <oui-datagrid data-rows="$ctrl.jobs">
             <oui-column data-title="::'data_processing_job_name' | translate"
                         data-property="name"
-                        data-sortable="asc"
+                        data-sortable
                         data-type="string"
                         data-searchable
                         data-filterable>
@@ -44,7 +44,7 @@
             </oui-column>
             <oui-column data-title="::'data_processing_job_creation_date' | translate"
                         data-property="creationDate"
-                        data-sortable>
+                        data-sortable="desc">
                 <span title="{{ ::$row.creationDate | momentFormat:'MMMM Do YYYY, h:mm:ss a'}}" data-ng-bind="::$row.creationDate | momentRelative"></span>
             </oui-column>
             <oui-column data-title="::'data_processing_job_status' | translate"

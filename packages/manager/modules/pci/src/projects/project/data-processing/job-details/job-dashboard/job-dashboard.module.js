@@ -3,6 +3,7 @@ import '@uirouter/angularjs';
 
 import routing from './job-dashboard.routing';
 
+import PciStoragesContainersService from '../../../storages/containers/containers.service';
 import dataProcessingJobDetailsComponent from './job-dashboard.component';
 import jobStatus from '../../job-status';
 import terminateJob from './terminate-job';
@@ -19,6 +20,7 @@ angular
   ])
   .config(routing)
   .component('dataProcessingJobDetailsDashboardComponent', dataProcessingJobDetailsComponent)
+  .service('PciStoragesContainersService', PciStoragesContainersService)
   .run(/* @ngTranslationsInject:json ./translations */);
 
 export default moduleName;

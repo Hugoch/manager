@@ -38,11 +38,11 @@ export const formatDuration = (value) => {
  * @return {number} Bytes value
  */
 export const parseMemory = (value) => {
-  const unit = value.match(/^([0-9]+)([A-Za-z]{1,2})$/);
+  const unit = value.match(/^([0-9.]+)([A-Za-z]{1,2})$/);
   if (unit) {
-    return parseInt(unit[1], 10) * memoryConversions[unit[2]];
+    return parseFloat(unit[1]) * memoryConversions[unit[2]];
   }
-  return parseInt(value, 10);
+  return parseFloat(value);
 };
 
 /**
@@ -76,7 +76,7 @@ export const summarizeSparkJob = (job) => {
       * parseFloat(engineParameters.executor_num)).toString(), 'Gi'),
     type: 'Spark',
     status: startCase(job.status.toLowerCase()),
-    duration: (moment(job.endDate) - moment(job.creationDate)).valueOf(),
+    duration: job.endDate ? (moment(job.endDate) - moment(job.creationDate)).valueOf() : 0,
     engineParameters,
   };
   return sparkJob;

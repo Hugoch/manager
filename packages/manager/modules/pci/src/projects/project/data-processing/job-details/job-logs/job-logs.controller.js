@@ -9,8 +9,7 @@ export default class {
   }
 
   $onInit() {
-    console.log(this.logger);
-    this.logger.startLogsPolling(this.jobId, 5000);
+    this.logger.startLogsPolling(this.projectId, this.job.id, 5000, true);
   }
 
   $onDestroy() {
