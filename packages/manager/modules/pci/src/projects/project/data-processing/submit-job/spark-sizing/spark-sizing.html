@@ -6,6 +6,7 @@
             <label class="oui-select">
                 <select name="driver-template" class="oui-select__input"
                         data-ng-model="$ctrl.state.driverTemplate"
+                        data-ng-change="$ctrl.updateStateFromTemplate()"
                         required>
                     <option
                         ng-repeat="template in $ctrl.driverTemplates"
@@ -23,6 +24,8 @@
             <label class="oui-select">
                 <select name="worker-template"
                         class="oui-select__input"
+                        data-ng-model="$ctrl.state.workerTemplate"
+                        data-ng-change="$ctrl.updateStateFromTemplate()"
                         required>
                     <option
                         ng-repeat="template in $ctrl.workerTemplates"

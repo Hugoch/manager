@@ -21,8 +21,8 @@ export default class {
     this.state = {
       arguments: [],
       jobName: nameGenerator(),
-      jarFileNotFound: false, // used by UI to show a warning when file is not found
-      jarFileInvalid: false, // used by UI to show a warning when file is not found
+      mainApplicationCodeFileNotFound: false, // used by UI to show a warning when file is not found
+      mainApplicationCodeFileInvalid: false, // used by UI to show a warning when file is not found
     };
     this.sparkConfigService.listContainers(this.projectId)
       .then((containers) => {
@@ -50,16 +50,22 @@ export default class {
       .listObjects(this.projectId, containerId)
       .then((container) => {
         this.containerObjects = container.objects;
-        // handle case where customer started by JAR name before selecting container
-        this.onJarChangeHandler();
+        // handle case where customer started by code filename before selecting container
+        this.onMainApplicationCodeChangeHandler();
       });
     this.onChangeHandler(this.state);
   }
 
-  onJarChangeHandler() {
-    const obj = find(this.containerObjects, o => o.name === this.state.jarFile);
-    this.state.jarFileInvalid = (obj !== undefined && obj.contentType !== 'application/java-archive');
-    this.state.jarFileNotFound = (obj === undefined);
+  onMainApplicationCodeChangeHandler() {
+    const obj = find(this.containerObjects, o => o.name === this.state.mainApplicationCode);
+    this.state.mainApplicationCodeFileInvalid = (obj !== undefined && (obj.contentType !== 'application/java-archive' && this.state.jobType === 'java'));
+    this.state.mainApplicationCodeFileNotFound = (obj === undefined);
+    this.onChangeHandler(this.state);
+  }
+
+  onJobTypeChangeHandler() {
+    // handle case where customer changes job type after typing filename
+    this.onMainApplicationCodeChangeHandler();
     this.onChangeHandler(this.state);
   }
 

@@ -25,12 +25,14 @@ export default class {
       workerCount: 1,
       workerCores: 1,
       workersMemoryGb: 1,
-      workerOverheadMemoryMb: MIN_MEMORY_OVERHEAD_MB,
+      workerMemoryOverheadMb: MIN_MEMORY_OVERHEAD_MB,
       driverCores: 1,
       driverMemoryGb: 1,
-      driverOverheadMemoryMb: MIN_MEMORY_OVERHEAD_MB,
+      driverMemoryOverheadMb: MIN_MEMORY_OVERHEAD_MB,
       advancedSizing: false,
     };
+    // update overhead memory from template
+    this.updateStateFromTemplate();
   }
 
   /**
@@ -40,14 +42,12 @@ export default class {
    */
   $onChanges() {
     Object.assign(this.values, this.state);
-    console.log(this.values);
   }
 
   /**
    * Handler for sizing advanced configuration link
    */
   onClickAdvancedConfigurationHandler() {
-    console.log('advanced');
     if (!this.state.advancedSizing) {
       this.updateStateFromTemplate();
     }
@@ -74,5 +74,6 @@ export default class {
       workerMemoryGb: workerTpl.memory / 1e9,
       workerMemoryOverheadMb,
     });
+    console.log(this.state);
   }
 }

@@ -61,6 +61,8 @@
   "data_processing_submit_job_pyspark_description": "Submit a Python working directory with a Conda requirements file.",
   "data_processing_submit_job_sizing_description": "Your Spark job is ran by a driver node which distributes tasks to workers.<br />Define cores and memory allocated to your nodes and the number of workers you want to run in parallel",
   "data_processing_submit_job_button_label": "Submit job",
+  "data_processing_submit_job_spinner_label": "working on it...",
+  "data_processing_submit_job_error_label": "Aww snap ! An error occurred, we could not submit your job right now.",
   "data_processing_onboarding_content_1": "Data Processing is easy-to-use, cost effective and fully managed cloud service to easily run <a href=\"http://spark.apache.org/\" target=\"_blank\">Apache Spark</a> jobs.",
   "data_processing_onboarding_content_2": "With Data Processing, your job is launched in seconds and you pay per minute only for used resources. Deployment and monitoring is automated, focus on your code.",
   "data_processing_onboarding_content_3": "You can run data processing, analytics and machine learning jobs using Java, Scala or Python with standard libraries.",

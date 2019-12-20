@@ -16,21 +16,23 @@ export default class {
     // initialize component state
     this.state = {
       region: null,
-      jobType: {},
+      jobEngine: {},
       jobSizing: {},
       jobConfig: {},
     };
     // we use this trick to trigger a state update of child component. This circumvent the missing
     // onChange event on oui-field components.
     this.jobSizingValidate = false;
+    this.submitRetries = 0;
+    this.isSubmitting = false;
   }
 
   /**
    * Fetch available regions from capabilities and update binding
    */
   updateAvailableRegions() {
-    const engine = find(this.capabilities, e => e.name === this.state.jobType.engine);
-    const version = find(engine.availableVersions, v => v.name === this.state.jobType.version);
+    const engine = find(this.capabilities, e => e.name === this.state.jobEngine.engine);
+    const version = find(engine.availableVersions, v => v.name === this.state.jobEngine.version);
     this.regions = version.availableRegions.map(region => ({
       name: region,
       hasEnoughQuota: () => true,
@@ -51,7 +53,7 @@ export default class {
    * @param jobType Selected job type
    */
   onChangeJobTypeHandler(jobType) {
-    this.state.jobType = jobType;
+    this.state.jobEngine = jobType;
     console.log(this.state);
   }
 
@@ -71,24 +73,22 @@ export default class {
   onSubmitJobHandler() {
     // TODO implement
     console.log(this.state.jobConfig);
+    this.isSubmitting = true;
     const payload = {
       containerName: this.state.jobConfig.swiftContainer,
-      engine: this.state.jobType.engine,
-      engineVersion: this.state.jobType.version,
+      engine: this.state.jobEngine.engine,
+      engineVersion: this.state.jobEngine.version,
       name: this.state.jobConfig.jobName,
       region: this.state.region,
       engineParameters: [
         {
           name: 'main_application_code',
-          value: this.state.jobConfig.jarFile,
-        },
-        {
-          name: 'main_class_name',
-          value: this.state.jobConfig.mainClass,
+          value: this.state.jobConfig.mainApplicationCode,
         },
         {
           name: 'arguments',
-          value: this.state.jobConfig.arguments,
+          // handle iceberg limitation concerning arrays. We use comma-delimited string
+          value: this.state.jobConfig.arguments.length > 0 ? ','.concat(this.state.jobConfig.arguments) : '',
         },
         {
           name: 'driver_memory',
@@ -100,22 +100,38 @@ export default class {
         },
         {
           name: 'driver_cores',
-          value: this.state.jobSizing.driverCores,
+          value: this.state.jobSizing.driverCores.toString(),
         },
         {
           name: 'executor_num',
-          value: this.state.jobSizing.workerCount,
+          value: this.state.jobSizing.workerCount.toString(),
         },
         {
           name: 'executor_cores',
-          value: this.state.jobSizing.workerCores,
+          value: this.state.jobSizing.workerCores.toString(),
         },
         {
           name: 'job_type',
-          value: this.state.jobType.engine,
+          value: this.state.jobConfig.jobType,
         },
       ],
     };
+    if (this.state.jobConfig.jobType === 'java') {
+      payload.engineParameters.push({
+        name: 'main_class_name',
+        value: this.state.jobConfig.mainClass,
+      });
+    }
+    this.dataProcessingService.submitJob(this.projectId, payload)
+      .catch(() => {
+        if (this.submitRetries < 2) {
+          this.submitRetries += 1;
+          this.onSubmitJobHandler();
+        } else {
+          console.log('FAIL');
+          this.isSubmitting = false;
+        }
+      });
     console.log(payload);
   }
 }

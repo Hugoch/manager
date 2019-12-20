@@ -58,4 +58,17 @@ export default class DataProcessingService {
       .$promise
       .then(capabilities => keyBy(capabilities.data, e => e.name));
   }
+
+  /**
+   * Submit a new job to the API
+   * @param projectId Id of the project to submit job to
+   * @param job
+   * @return {Promise<any>}
+   */
+  submitJob(projectId, job) {
+    return this.OvhApiCloudProjectDataProcessingJobs
+      .post()
+      .execute({ serviceName: projectId, ...job })
+      .$promise;
+  }
 }
