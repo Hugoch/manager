@@ -13,6 +13,23 @@ export default class {
     this.DATA_PROCESSING_UI_URL = DATA_PROCESSING_UI_URL;
   }
 
+  $onInit() {
+    this.subscribeToMessages();
+  }
+
+  refreshMessage() {
+    this.messages = this.messageHandler.getMessages();
+  }
+
+  subscribeToMessages() {
+    const channel = 'pci.projects.project.data-processing';
+    this.cucCloudMessage.unSubscribe(channel);
+    this.messageHandler = this.cucCloudMessage.subscribe(
+      channel,
+      { onMessage: () => this.refreshMessage() },
+    );
+  }
+
   /**
    * Load a modal asking confirmation to terminate current job
    */

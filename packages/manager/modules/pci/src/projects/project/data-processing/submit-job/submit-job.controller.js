@@ -3,9 +3,11 @@ import { convertMemory } from '../data-processing.utils';
 
 export default class {
   /* @ngInject */
-  constructor($scope, $state, CucCloudMessage, dataProcessingService, CucRegionService) {
+  constructor($scope, $state, $translate, CucCloudMessage, dataProcessingService,
+    CucRegionService) {
     this.$scope = $scope;
     this.$state = $state; // router state
+    this.$translate = $translate;
     this.cucCloudMessage = CucCloudMessage;
     this.dataProcessingService = dataProcessingService;
     this.cucRegionService = CucRegionService;
@@ -70,6 +72,11 @@ export default class {
 
   onSubmitJobHandler() {
     this.isSubmitting = true;
+    let args = '';
+    if (this.state.jobConfig.arguments.length > 0) {
+      args = this.state.jobConfig.arguments.map(o => o.title)
+        .join(',');
+    }
     const payload = {
       containerName: this.state.jobConfig.swiftContainer,
       engine: this.state.jobEngine.engine,
@@ -84,7 +91,7 @@ export default class {
         {
           name: 'arguments',
           // handle iceberg limitation concerning arrays. We use comma-delimited string
-          value: this.state.jobConfig.arguments.length > 0 ? ','.concat(this.state.jobConfig.arguments) : '',
+          value: args,
         },
         {
           name: 'driver_memory',

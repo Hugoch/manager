@@ -5,8 +5,6 @@ import jobTypeSelectorComponent from './jobtype-selector.component';
 
 const moduleName = 'ovhManagerDataProcessingSubmitJobTypeSelector';
 
-console.log('jobtype-selector :: index');
-
 angular
   .module(moduleName, [
     'ui.router',

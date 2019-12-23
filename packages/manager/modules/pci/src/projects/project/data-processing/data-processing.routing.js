@@ -3,12 +3,20 @@ export default /* @ngInject */$stateProvider => $stateProvider.state(
     cache: false,
     url: '/data-processing',
     component: 'dataProcessingComponent',
-    // redirectTo: transition => transition
-    //   .injector()
-    //   .getAsync('jobs')
-    //   .then(() => false),
+    redirectTo: transition => Promise.all([
+      transition.injector()
+        .getAsync('activations'),
+    ])
+      .then(([activations]) => {
+        if (activations.data.length === 0) {
+          return { state: 'pci.projects.project.data-processing.onboarding' };
+        }
+        return false;
+      }),
     resolve: {
       breadcrumb: /* @ngInject */ $translate => $translate.instant('data_processing_title'),
+      activations: /* @ngInject */ (dataProcessingService,
+        projectId) => dataProcessingService.getActivations(projectId),
       jobs: /* @ngInject */ (dataProcessingService,
         projectId) => dataProcessingService.getJobs(projectId),
       submitJob: /* @ngInject */ ($state, projectId) => () => $state.go('pci.projects.project.data-processing.submit-job', { projectId }),

@@ -1,13 +1,13 @@
 import reduce from 'lodash/reduce';
 import illustration from './assets/data-processing.png';
-import { BETA_CONTRACT_LINK, GUIDES } from './onboarding.constants';
+import { GUIDES } from './onboarding.constants';
 
 export default class {
   /* @ngInject */
-  constructor(
-    $translate,
-  ) {
+  constructor($translate, $state, dataProcessingService) {
     this.$translate = $translate;
+    this.dataProcessingService = dataProcessingService;
+    this.$state = $state;
   }
 
   $onInit() {
@@ -32,5 +32,12 @@ export default class {
 
   acceptLab(accepted) {
     this.agreedBeta = accepted;
+  }
+
+  activateService() {
+    this.dataProcessingService.activate(this.projectId)
+      .then(() => {
+        this.$state.go('pci.projects.project.data-processing', {}, { reload: true });
+      });
   }
 }

@@ -6,16 +6,44 @@ export default class DataProcessingService {
   constructor($q, OvhApiCloudProjectDataProcessing) {
     this.logs = [];
     this.$q = $q;
-    this.OvhApiCloudProjectDataProcessingJobs = OvhApiCloudProjectDataProcessing.Jobs()
+    this.OvhApiCloudProjectDataProcessingJobs = OvhApiCloudProjectDataProcessing
+      .Jobs()
       .iceberg();
     this.OvhApiCloudProjectDataProcessingCapabilities = OvhApiCloudProjectDataProcessing
       .Capabilities()
       .iceberg();
+    this.OvhApiCloudProjectDataProcessingActivations = OvhApiCloudProjectDataProcessing
+      .Activations()
+      .iceberg();
+  }
+
+  /**
+   * Retrieve list of activations
+   * @param projectId string Project to list activations from
+   * @return {Promise<any>}
+   */
+  getActivations(projectId) {
+    return this.OvhApiCloudProjectDataProcessingActivations
+      .query()
+      .execute({ serviceName: projectId })
+      .$promise;
+  }
+
+  /**
+   * Activate project with the given id
+   * @param projectId string Project id to activate
+   * @return {*}
+   */
+  activate(projectId) {
+    return this.OvhApiCloudProjectDataProcessingActivations
+      .post()
+      .execute({ serviceName: projectId })
+      .$promise;
   }
 
   /**
    * Retrieve list of jobs
-   * @param projectId List jobs related to this project id
+   * @param projectId string List jobs related to this project id
    * @return {Promise<any>}
    */
   getJobs(projectId) {
@@ -31,8 +59,8 @@ export default class DataProcessingService {
 
   /**
    * Retrieve a single job
-   * @param projectId Project id containing the job
-   * @param jobId Job id
+   * @param projectId string Project id containing the job
+   * @param jobId string Job id
    * @return {Promise<any>}
    */
   getJob(projectId, jobId) {
@@ -48,7 +76,7 @@ export default class DataProcessingService {
 
   /**
    * Retrieve capabilities
-   * @param projectId Project to get capabilities from
+   * @param projectId string Project to get capabilities from
    * @return {Promise<any>}
    */
   getCapabilities(projectId) {
@@ -61,8 +89,8 @@ export default class DataProcessingService {
 
   /**
    * Submit a new job to the API
-   * @param projectId Id of the project to submit job to
-   * @param job
+   * @param projectId string Id of the project to submit job to
+   * @param job Job object
    * @return {Promise<any>}
    */
   submitJob(projectId, job) {
@@ -72,6 +100,12 @@ export default class DataProcessingService {
       .$promise;
   }
 
+  /**
+   * Terminate a running job
+   * @param projectId string Id of the project
+   * @param jobId string Id of the job to terminate
+   * @return {Promise<any>}
+   */
   terminateJob(projectId, jobId) {
     return this.OvhApiCloudProjectDataProcessingJobs
       .delete()
@@ -82,6 +116,15 @@ export default class DataProcessingService {
       .$promise;
   }
 
+  /**
+   * Retrieve logs from a job
+   * @param projectId string Id of the project
+   * @param jobId string Id of the job to terminate
+   * @param from string From how long ago we want logs.
+   * Example: from=now-2h. Or since when we want the logs.
+   * Example: 2019-10-28T12:00:00.000 (must be UTC).
+   * @return {*}
+   */
   getLogs(projectId, jobId, from) {
     return this.OvhApiCloudProjectDataProcessingJobs
       .logs()

@@ -1,4 +1,7 @@
-import { DATA_PROCESSING_STATUS_TO_CLASS } from '../data-processing.constants';
+import {
+  DATA_PROCESSING_STATUS_TO_CLASS,
+  DATA_PROCESSING_STATUSES
+} from '../data-processing.constants';
 
 export default class {
   /* @ngInject */
@@ -9,11 +12,10 @@ export default class {
 
   getStatusText() {
     const normalizedStatus = this.status.toUpperCase();
-    if (normalizedStatus in DATA_PROCESSING_STATUS_TO_CLASS) {
-      return this.status;
-    } else {
-      return this.$translate.instant('data_processing_job_status_unknown');
+    if (normalizedStatus in DATA_PROCESSING_STATUSES) {
+      return this.$translate.instant(`data_processing_job_status_${this.status.toLowerCase()}`);
     }
+    return this.$translate.instant('data_processing_job_status_unknown');
   }
 
   /**

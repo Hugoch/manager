@@ -13,7 +13,7 @@ export const DATA_PROCESSING_STATUSES = Object.freeze({
   RUNNING: 'Running',
   FAILED: 'Failed',
   COMPLETED: 'Completed',
-  TERMINATED: 'Terminated',
+  TERMINATED: 'Killed',
 });
 
 export const DATA_PROCESSING_UI_URL = {
