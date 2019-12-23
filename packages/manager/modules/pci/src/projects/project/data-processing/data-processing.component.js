@@ -1,5 +1,6 @@
 import template from './data-processing.html';
 import controller from './data-processing.controller';
+import './data-processing.scss';
 
 export default {
   template,
@@ -8,5 +9,6 @@ export default {
     jobs: '<',
     submitJob: '<',
     showJob: '<',
+    projectId: '<',
   },
 };

@@ -45,7 +45,8 @@
             <oui-column data-title="::'data_processing_job_creation_date' | translate"
                         data-property="creationDate"
                         data-sortable="desc">
-                <span title="{{ ::$row.creationDate | momentFormat:'MMMM Do YYYY, h:mm:ss a'}}" data-ng-bind="::$row.creationDate | momentRelative"></span>
+                <span title="{{ ::$row.creationDate | momentFormat:'MMMM Do YYYY, h:mm:ss a'}}"
+                      data-ng-bind="::$row.creationDate | momentRelative"></span>
             </oui-column>
             <oui-column data-title="::'data_processing_job_status' | translate"
                         data-property="status"
@@ -54,19 +55,24 @@
             </oui-column>
             <oui-action-menu data-align="end" data-compact>
                 <oui-action-menu-item
-                    data-on-click="$ctrl.manageCluster($row.serviceName)">
+                    data-on-click="$ctrl.showJob($row.id)">
                     <span data-translate="data_processing_list_button_job_details"></span>
                 </oui-action-menu-item>
                 <oui-action-menu-item
-                    data-on-click="$ctrl.manageCluster($row.serviceName)">
+                    data-href="{{ $ctrl.DATA_PROCESSING_UI_URL[$row.region]+'/'+$row.id }}"
+                    data-ng-if="$ctrl.isJobRunning($row)"
+                    data-external>
                     <span data-translate="data_processing_list_button_job_ui"></span>
                 </oui-action-menu-item>
                 <oui-action-menu-item
-                    data-on-click="$ctrl.manageCluster($row.serviceName)">
+                    data-on-click="$ctrl.showJob($row.id)"
+                    data-external>
                     <span data-translate="data_processing_list_button_job_monitoring"></span>
                 </oui-action-menu-item>
                 <oui-action-menu-item
-                    data-on-click="$ctrl.manageCluster($row.serviceName)">
+                    class="joblist__action-button__danger"
+                    data-ng-if="$ctrl.isJobRunning($row)"
+                    data-on-click="$ctrl.terminateJob($row)">
                     <span data-translate="data_processing_list_button_job_terminate"></span>
                 </oui-action-menu-item>
             </oui-action-menu>

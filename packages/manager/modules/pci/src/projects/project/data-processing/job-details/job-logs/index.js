@@ -1,6 +1,7 @@
 import angular from 'angular';
 import '@uirouter/angularjs';
 import 'oclazyload';
+import PciStoragesContainersService from '../../../storages/containers/containers.service';
 
 const moduleName = 'ovhManagerDataProcessingJobLogs';
 
@@ -19,6 +20,7 @@ angular
           .then(mod => $ocLazyLoad.inject(mod.default || mod));
       },
     });
-  });
+  })
+  .service('PciStoragesContainersService', PciStoragesContainersService);
 
 export default moduleName;

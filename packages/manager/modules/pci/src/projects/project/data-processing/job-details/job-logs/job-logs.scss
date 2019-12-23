@@ -38,6 +38,10 @@ $logger-text-color: #5a6a7d;
   animation: tail-logs-blink 1s step-end infinite;
 }
 
+.logs__downloadbutton {
+  margin: 1em 0;
+}
+
 @keyframes tail-logs-blink {
   0% {
     opacity: 1;

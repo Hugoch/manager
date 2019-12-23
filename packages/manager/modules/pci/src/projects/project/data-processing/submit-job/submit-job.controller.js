@@ -92,7 +92,7 @@ export default class {
         },
         {
           name: 'executor_memory',
-          value: convertMemory(`${this.state.jobSizing.workersMemoryGb}G`, 'Gi'),
+          value: convertMemory(`${this.state.jobSizing.workerMemoryGb}G`, 'Gi'),
         },
         {
           name: 'driver_cores',
@@ -120,7 +120,7 @@ export default class {
     }
     this.dataProcessingService.submitJob(this.projectId, payload)
       .then(() => {
-        this.$state.go('pci.projects.project.data-processing', { projectId: this.projectId });
+        this.$state.go('pci.projects.project.data-processing', { projectId: this.projectId }, { reload: true });
       }, () => {
         if (this.submitRetries < 2) {
           this.submitRetries += 1;

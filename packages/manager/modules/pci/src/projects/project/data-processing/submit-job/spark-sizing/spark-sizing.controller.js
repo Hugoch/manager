@@ -24,7 +24,7 @@ export default class {
       workerTemplate: '1',
       workerCount: 1,
       workerCores: 1,
-      workersMemoryGb: 1,
+      workerMemoryGb: 1,
       workerMemoryOverheadMb: MIN_MEMORY_OVERHEAD_MB,
       driverCores: 1,
       driverMemoryGb: 1,
@@ -74,6 +74,14 @@ export default class {
       workerMemoryGb: workerTpl.memory / 1e9,
       workerMemoryOverheadMb,
     });
-    console.log(this.state);
+  }
+
+  computePrice() {
+    const {
+      workerMemoryGb, driverMemoryGb, workerCount, workerMemoryOverheadMb,
+      driverMemoryOverheadMb, driverCores, workerCores
+    } = this.state;
+    return (workerMemoryGb + workerMemoryOverheadMb / 1e3) * 0.01 * workerCount
+      + (driverMemoryGb + driverMemoryOverheadMb / 1e3) * 0.01 + (driverCores + workerCores) * 0.02;
   }
 }

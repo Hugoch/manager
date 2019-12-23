@@ -5,6 +5,10 @@ import {
   keyBy,
   startCase,
 } from 'lodash';
+import {
+  DATA_PROCESSING_STATUS_TO_CLASS,
+  DATA_PROCESSING_STATUSES
+} from './data-processing.constants';
 
 const memoryConversions = {
   k: 1000,
@@ -439,10 +443,33 @@ export const nameGenerator = () => {
   return `${left}-${right}`;
 };
 
+/**
+ * Determine whether job is in a running state (opposed to a final state)
+ * @param job {*} Job to check
+ * @return {boolean} true if job is in a running state
+ */
+export const isJobRunning = job => [DATA_PROCESSING_STATUSES.PENDING,
+  DATA_PROCESSING_STATUSES.RUNNING, DATA_PROCESSING_STATUSES.SUBMITTED].includes(job.status);
+
+/**
+ * Get a CSS class name from a given job status
+ * @param status
+ * @return {string|any}
+ */
+export const getClassFromStatus = (status) => {
+  const normalizedStatus = status.toUpperCase();
+  if (normalizedStatus in DATA_PROCESSING_STATUS_TO_CLASS) {
+    return DATA_PROCESSING_STATUS_TO_CLASS[normalizedStatus];
+  }
+  return 'error';
+};
+
 export default {
   parseMemory,
   formatDuration,
   convertMemory,
   summarizeSparkJob,
   nameGenerator,
+  isJobRunning,
+  getClassFromStatus,
 };

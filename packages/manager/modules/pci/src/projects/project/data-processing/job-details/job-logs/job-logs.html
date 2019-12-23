@@ -11,7 +11,14 @@
         <div class="col-md-12 logger_placeholder"
              data-ng-if="$ctrl.logger.logs.logsAddress !== null">
             {{ ::'data_processing_details_logs_swift' | translate:{swiftUrl:$ctrl.logger.logs.logsAddress} }}
+            <br/>
             <a href="{{ $ctrl.logger.logs.logsAddress }}">{{ $ctrl.logger.logs.logsAddress }}</a>
+            <br/>
+            <oui-button
+                class="logs__downloadbutton"
+                data-variant="primary"
+                data-text="{{ ::'data_processing_details_logs_swift_download_label' | translate }}"
+                data-on-click="$ctrl.downloadLogs()"></oui-button>
         </div>
     </div>
 </div>

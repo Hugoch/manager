@@ -10,6 +10,7 @@ import jobDetails from './job-details';
 import jobStatus from './job-status';
 import onboarding from './onboarding';
 import labs from '../../../components/project/labs';
+import terminateJob from './terminate-job';
 import { convertMemory, formatDuration } from './data-processing.utils';
 
 const moduleName = 'ovhManagerDataProcessingComponent';
@@ -22,6 +23,7 @@ angular
     jobStatus,
     onboarding,
     labs,
+    terminateJob,
   ])
   .config(routing)
   .component('dataProcessingComponent', dataProcessingComponent)

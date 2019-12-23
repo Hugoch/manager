@@ -7,7 +7,6 @@ import 'oclazyload';
 
 const moduleName = 'ovhManagerDataProcessing';
 
-console.log('INDEX');
 angular.module(moduleName, [
   'ui.router',
   'oc.lazyLoad',
