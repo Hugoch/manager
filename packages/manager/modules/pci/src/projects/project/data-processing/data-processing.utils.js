@@ -69,7 +69,7 @@ export const convertMemory = (value, unit) => {
  */
 export const summarizeSparkJob = (job) => {
   const engineParameters = mapValues(keyBy(job.engineParameters, 'name'), 'value');
-  engineParameters.arguments = Object.prototype.hasOwnProperty.call(engineParameters, 'conf') ? engineParameters.conf.split(',') : [];
+  engineParameters.arguments = Object.prototype.hasOwnProperty.call(engineParameters, 'arguments') ? engineParameters.arguments.split(',') : [];
   const sparkJob = {
     ...job,
     vcores: (parseFloat(engineParameters.driver_cores)

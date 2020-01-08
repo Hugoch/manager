@@ -4,7 +4,7 @@ import { convertMemory } from '../data-processing.utils';
 export default class {
   /* @ngInject */
   constructor($scope, $state, $translate, CucCloudMessage, dataProcessingService,
-    CucRegionService) {
+              CucRegionService) {
     this.$scope = $scope;
     this.$state = $state; // router state
     this.$translate = $translate;
