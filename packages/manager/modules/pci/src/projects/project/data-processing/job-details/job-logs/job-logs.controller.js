@@ -1,11 +1,14 @@
 export default class {
   /* @ngInject */
-  constructor($state, $uibModal, CucCloudMessage, dataProcessingJobLogsService) {
+  constructor($scope, $state, $timeout, $uibModal, CucCloudMessage, dataProcessingJobLogsService) {
+    this.$scope = $scope; // router state
     this.$state = $state; // router state
+    this.$timeout = $timeout;
     this.dataProcessingJobLogsService = dataProcessingJobLogsService;
     this.logger = dataProcessingJobLogsService;
     // let's do some binding
     this.downloadLogs = this.downloadLogs.bind(this);
+    this.isDownloadButtonDisabled = false;
   }
 
   $onInit() {
@@ -17,11 +20,16 @@ export default class {
   }
 
   downloadLogs() {
-    const re = /https:\/\/storage\.([a-z0-9]+)\.cloud.ovh.net\/v1\/AUTH_[a-z0-9]+\/(.*)/;
+    const re = /https:\/\/storage\.[a-z0-9]+\.cloud.ovh.net\/v1\/AUTH_[a-z0-9]+\/(.*)\/(.*)/;
     const logsUrl = this.logger.logs.logsAddress;
     if (logsUrl !== undefined && logsUrl !== null) {
       const matches = logsUrl.match(re);
       this.logger.downloadObject(this.projectId, this.job.region, matches[1], matches[2]);
+      this.isDownloadButtonDisabled = true;
+      this.$timeout(() => {
+        this.isDownloadButtonDisabled = false;
+        this.$scope.$apply();
+      }, 3000);
     }
   }
 }
