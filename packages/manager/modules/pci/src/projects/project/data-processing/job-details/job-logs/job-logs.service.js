@@ -4,11 +4,12 @@ import moment from 'moment';
 export default class JobLogsService {
   /* @ngInject */
   constructor($timeout, $translate, dataProcessingService, PciStoragesContainersService,
-              CucControllerHelper) {
+    CucControllerHelper) {
     this.logs = {
       logs: [{
         timestamp: moment()
           .toISOString(),
+        id: moment().valueOf() * 1e6,
         content: $translate.instant('data_processing_details_logs_default_message'),
       }],
       logsAddress: null,
@@ -27,7 +28,7 @@ export default class JobLogsService {
    * @param firstPoll boolean Set to true to enable a first polling before timer
    */
   startLogsPolling(projectId, jobId, interval = 5000, firstPoll = false) {
-    const from = `now-${interval / 1000}s`;
+    const from = `now-${(interval + 1000) / 1000}s`;
     if (firstPoll) {
       this.pollLogs(projectId, jobId, from)
         .then((logs) => {
@@ -65,7 +66,7 @@ export default class JobLogsService {
       .then(data => ({
         ...data,
         // dedupe messages. Implementation ensures maintained order.
-        logs: uniqBy([...this.logs.logs, ...data.logs], item => item.timestamp),
+        logs: uniqBy([...this.logs.logs, ...data.logs], item => item.id),
       }));
   }
 

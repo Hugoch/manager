@@ -3,8 +3,8 @@
          data-scroll-glue>
         <div data-ng-if="$ctrl.logger.logs.logsAddress === null">
             <div class="logger__entry"
-                 ng-repeat="entry in $ctrl.logger.logs.logs track by entry.timestamp">
-                <span class="logger__entry-message">{{ entry.timestamp.padEnd(30,' ') }} {{ entry.content }}</span>
+                 ng-repeat="entry in $ctrl.logger.logs.logs track by entry.id">
+                <span class="logger__entry-message">{{(entry.id / 1000000. | momentISO).padEnd(25,' ') }} {{ entry.content }}</span>
             </div>
             <i class="logger__cursor">_</i>
         </div>

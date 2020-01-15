@@ -35,6 +35,8 @@ angular
     .calendar())
   .filter('momentRelative', () => value => moment(value)
     .fromNow())
+  .filter('momentISO', () => value => moment(value)
+    .toISOString())
   // setup a templating filter to return nicely formatted durations
   .filter('duration', () => value => formatDuration(value))
   .filter('memory', () => (value, unit) => convertMemory(value, unit))
