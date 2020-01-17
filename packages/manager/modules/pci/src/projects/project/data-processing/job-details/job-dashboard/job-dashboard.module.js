@@ -8,6 +8,7 @@ import dataProcessingJobDetailsComponent from './job-dashboard.component';
 import jobStatus from '../../job-status';
 import terminateJob from './terminate-job';
 import jobLogs from '../job-logs';
+import metricsChart from './metrics-chart';
 
 const moduleName = 'ovhManagerDataProcessingJobDetailsDashboardComponent';
 
@@ -17,6 +18,7 @@ angular
     jobStatus,
     terminateJob,
     jobLogs,
+    metricsChart,
   ])
   .config(routing)
   .component('dataProcessingJobDetailsDashboardComponent', dataProcessingJobDetailsComponent)

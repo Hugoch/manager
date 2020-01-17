@@ -15,6 +15,9 @@ export default class DataProcessingService {
     this.OvhApiCloudProjectDataProcessingActivations = OvhApiCloudProjectDataProcessing
       .Activations()
       .iceberg();
+    this.OvhApiCloudProjectDataProcessingMetrics = OvhApiCloudProjectDataProcessing
+      .Metrics()
+      .iceberg();
   }
 
   /**
@@ -135,5 +138,19 @@ export default class DataProcessingService {
       })
       .$promise
       .then(res => res.data);
+  }
+
+  /**
+   * Retrieve metrics token for the given project
+   * @param projectId
+   * @return {*}
+   */
+  getMetricsToken(projectId) {
+    return this.OvhApiCloudProjectDataProcessingMetrics
+      .query()
+      .execute({
+        serviceName: projectId,
+      })
+      .$promise;
   }
 }

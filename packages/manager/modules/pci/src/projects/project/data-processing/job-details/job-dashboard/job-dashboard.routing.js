@@ -11,6 +11,10 @@ export default /* @ngInject */$stateProvider => $stateProvider.state('pci.projec
       projectId,
       jobId,
     ) => dataProcessingService.getJob(projectId, jobId),
+    metricsToken: (
+      dataProcessingService,
+      projectId,
+    ) => dataProcessingService.getMetricsToken(projectId),
     breadcrumb: $translate => $translate.instant('data_processing_details_dashboard_label'), // update breadcrumb with "Dashboard"
   },
 });
