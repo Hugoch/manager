@@ -62,7 +62,7 @@ export default class JobLogsService {
    */
   pollLogs(projectId, jobId, from) {
     // FIXME return this.dataProcessingService.getLogs(projectId, jobId, from)
-    return this.dataProcessingService.getLogs(projectId, jobId)
+    return this.dataProcessingService.getLogs(projectId, jobId, from)
       .then(data => ({
         ...data,
         // dedupe messages. Implementation ensures maintained order.
