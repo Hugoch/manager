@@ -5,6 +5,19 @@ const webpackConfig = require('@ovh-ux/manager-webpack-config');
 const webpack = require('webpack');
 
 module.exports = (env = {}) => {
+  // eslint-disable-next-line no-param-reassign
+  env.dev = [
+    {
+      context: '/engine/apiv6/cloud/project/0a3e138bd51148679871e70335d4312d/dataProcessing',
+      target: 'http://api.ovh.com:61349/1.0',
+      nic: 'qj17494-ovh',
+    },
+    {
+      context: '/engine/apiv6/cloud/project/1db4328f553541aab3192a628b3fc697/dataProcessing',
+      target: 'http://api.ovh.com:61349/1.0',
+      nic: 'qj17494-ovh',
+    }];
+
   const { config } = webpackConfig({
     template: './src/index.html',
     basePath: './src',

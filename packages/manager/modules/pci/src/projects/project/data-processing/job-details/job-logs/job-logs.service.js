@@ -5,19 +5,25 @@ export default class JobLogsService {
   /* @ngInject */
   constructor($timeout, $translate, dataProcessingService, PciStoragesContainersService,
     CucControllerHelper) {
+    this.$translate = $translate;
+    this.$timeout = $timeout;
+    this.initLogs();
+    this.dataProcessingService = dataProcessingService;
+    this.containerService = PciStoragesContainersService;
+    this.cucControllerHelper = CucControllerHelper;
+  }
+
+  initLogs() {
     this.logs = {
       logs: [{
         timestamp: moment()
           .toISOString(),
-        id: moment().valueOf() * 1e6,
-        content: $translate.instant('data_processing_details_logs_default_message'),
+        id: moment()
+          .valueOf() * 1e6,
+        content: this.$translate.instant('data_processing_details_logs_default_message'),
       }],
       logsAddress: null,
     };
-    this.$timeout = $timeout;
-    this.dataProcessingService = dataProcessingService;
-    this.containerService = PciStoragesContainersService;
-    this.cucControllerHelper = CucControllerHelper;
   }
 
   /**
@@ -51,6 +57,7 @@ export default class JobLogsService {
     if (this.timer) {
       this.$timeout.cancel(this.timer);
     }
+    this.initLogs();
   }
 
   /**

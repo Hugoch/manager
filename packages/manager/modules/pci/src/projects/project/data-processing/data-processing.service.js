@@ -54,7 +54,7 @@ export default class DataProcessingService {
     return this.OvhApiCloudProjectDataProcessingJobs
       .query()
       .expand('CachedObjectList-Pages')
-      .limit(100)
+      .limit(250)
       .execute({ serviceName: projectId })
       .$promise
       .then(jobs => jobs.data.map(job => summarizeJob(job)));
